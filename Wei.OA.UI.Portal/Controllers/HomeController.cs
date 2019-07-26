@@ -6,25 +6,17 @@ using System.Web.Mvc;
 
 namespace Wei.OA.UI.Portal.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            if (Session["loginUser"] ==null)
+            {
+                return RedirectToAction("Index", "UserLogin");
+            }
 
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

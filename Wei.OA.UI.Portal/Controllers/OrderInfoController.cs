@@ -8,7 +8,7 @@ namespace Wei.OA.UI.Portal.Controllers
 {
     using Wei.OA.IBLL;
 
-    public class OrderInfoController : Controller
+    public class OrderInfoController : BaseController
     {
         public IOrderInfoService OrderInfoService { get; set; }//属性注入
 

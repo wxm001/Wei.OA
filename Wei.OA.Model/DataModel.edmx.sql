@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/25/2019 20:26:36
+-- Date Created: 07/26/2019 20:00:50
 -- Generated from EDMX file: E:\vs项目\OA项目\Wei.OA\Wei.OA.Model\DataModel.edmx
 -- --------------------------------------------------
 
@@ -31,6 +31,9 @@ GO
 IF OBJECT_ID(N'[dbo].[OrderInfo]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OrderInfo];
 GO
+IF OBJECT_ID(N'[dbo].[ActionInfo]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ActionInfo];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -39,7 +42,10 @@ GO
 -- Creating table 'UserInfo'
 CREATE TABLE [dbo].[UserInfo] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [UName] nvarchar(32)  NULL
+    [UName] nvarchar(32)  NULL,
+    [Pwd] nvarchar(32)  NOT NULL,
+    [ShowName] nvarchar(64)  NOT NULL,
+    [DelFlag] smallint  NOT NULL
 );
 GO
 

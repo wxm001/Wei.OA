@@ -10,7 +10,7 @@ namespace Wei.OA.UI.Portal.Controllers
     using Wei.OA.IBLL;
     using Wei.OA.Model;
 
-    public class UserInfoController : Controller
+    public class UserInfoController : BaseController
     {
         // GET: UserInfo
         //IUserInfoService userInfoService=new UserInfoService();

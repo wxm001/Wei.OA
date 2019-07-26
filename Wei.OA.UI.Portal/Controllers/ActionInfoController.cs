@@ -8,14 +8,21 @@ namespace Wei.OA.UI.Portal.Controllers
 {
     using Wei.OA.IBLL;
 
-    public class ActionInfoController : Controller
+    public class ActionInfoController : BaseController
     {
         public IActionInfoService ActionInfoService { get; set; }
 
         // GET: ActionInfo
         public ActionResult Index()
         {
-            throw new Exception("error!!!");
+            try
+            {
+                throw new Exception("error!!!");
+            }
+            catch (Exception e)
+            {
+                Common.LogHelper.WriteLog(e.ToString());
+            }            
             ViewData.Model = ActionInfoService.GetEntities(u => true).ToList();
             return View();
         }

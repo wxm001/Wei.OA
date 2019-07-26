@@ -10,4 +10,7 @@
   <object type="Wei.OA.UI.Portal.Controllers.ActionInfoController, Wei.OA.UI.Portal" singleton="false" >
     <property name="ActionInfoService" ref ="ActionInfoService" />
   </object>
+  <object type="Wei.OA.UI.Portal.Controllers.UserLoginController, Wei.OA.UI.Portal" singleton="false" >
+    <property name="UserInfoService" ref ="UserInfoService" />
+  </object>
 </objects>
