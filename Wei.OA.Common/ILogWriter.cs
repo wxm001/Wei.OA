@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wei.OA.Model
+namespace Wei.OA.Common
 {
-    public class Class1
+    public interface ILogWriter
     {
+        void WriteLogInfo(string txt);
     }
 }

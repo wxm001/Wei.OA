@@ -15,6 +15,7 @@ namespace Wei.OA.UI.Portal.Controllers
         // GET: ActionInfo
         public ActionResult Index()
         {
+            throw new Exception("error!!!");
             ViewData.Model = ActionInfoService.GetEntities(u => true).ToList();
             return View();
         }

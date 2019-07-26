@@ -16,6 +16,11 @@ namespace Wei.OA.UI.Portal
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //从配置文件中读取log4net配置，然后初始化
+            log4net.Config.XmlConfigurator.Configure();
+
+
         }
     }
 }
