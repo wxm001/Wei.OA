@@ -6,12 +6,12 @@
   </object>
 
   <object name="OrderInfoService" type="Wei.OA.BLL.OrderInfoService, Wei.OA.BLL" singleton="false" >
-    <property name="DbSession" ref="DbSession"/>
+    <!--<property name="DbSession" ref="DbSession"/>-->
     <property name="CurrentDal" ref="OrderInfoDal"/>
   </object>
 
   <object name="UserInfoService" type="Wei.OA.BLL.UserInfoService, Wei.OA.BLL" singleton="false" >
-    <property name="DbSession" ref="DbSession"/>
+    <!--<property name="DbSession" ref="DbSession"/>-->
     <property name="CurrentDal" ref="UserInfoDal"/>
   </object>
 </objects>

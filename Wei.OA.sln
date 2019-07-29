@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Demos", "T4Demos\T4Demos.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetDemo", "Log4NetDemo\Log4NetDemo.csproj", "{13D8F0BE-25AD-477B-B3B9-6A37CBD257D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemcacheDemo", "MemcacheDemo\MemcacheDemo.csproj", "{B0A4A7C3-CB1C-44F0-8E42-C4B28D3CF75C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{13D8F0BE-25AD-477B-B3B9-6A37CBD257D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13D8F0BE-25AD-477B-B3B9-6A37CBD257D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13D8F0BE-25AD-477B-B3B9-6A37CBD257D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A4A7C3-CB1C-44F0-8E42-C4B28D3CF75C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A4A7C3-CB1C-44F0-8E42-C4B28D3CF75C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A4A7C3-CB1C-44F0-8E42-C4B28D3CF75C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A4A7C3-CB1C-44F0-8E42-C4B28D3CF75C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{4B72CCFF-D371-4272-B6AD-AD244E0CCEE5} = {FA40B0CE-58EE-45F5-9C2B-9250183528D5}
 		{EE1EBA8D-3C61-4312-A5BD-C23403B514FE} = {FA40B0CE-58EE-45F5-9C2B-9250183528D5}
 		{13D8F0BE-25AD-477B-B3B9-6A37CBD257D2} = {FA40B0CE-58EE-45F5-9C2B-9250183528D5}
+		{B0A4A7C3-CB1C-44F0-8E42-C4B28D3CF75C} = {FA40B0CE-58EE-45F5-9C2B-9250183528D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A69243BD-8EF1-4B72-9138-24593BFF8C03}

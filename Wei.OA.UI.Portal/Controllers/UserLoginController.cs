@@ -65,7 +65,16 @@ namespace Wei.OA.UI.Portal.Controllers
                 return Content("用户名或密码错误");
             }
 
-            Session["loginUser"] = userInfo;
+            //Session["loginUser"] = userInfo;//用memcache+cookie代替
+
+            //立即分配一个标志，GUID，作为mm存储数据的key，把用户对象放到mm；把guid放到客户端cookie中。
+            string userLoginId = Guid.NewGuid().ToString();
+
+            //把用户数据写到memcache(变化：可能写到不同地方，可能写入多个地方)
+            Common.Cache.CacheHelper.AddCache(userLoginId,userInfo,DateTime.Now.AddMinutes(20));
+
+            //往客户端写入cookie
+            Response.Cookies["userLoginId"].Value = userLoginId;
 
             //3、正确则跳转到首页
             return Content("ok");

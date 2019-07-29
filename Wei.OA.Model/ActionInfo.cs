@@ -12,6 +12,7 @@ namespace Wei.OA.Model
     using System;
     using System.Collections.Generic;
     
+    [Serializable]
     public partial class ActionInfo
     {
         public int Id { get; set; }

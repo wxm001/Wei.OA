@@ -10,10 +10,10 @@ namespace Wei.OA.UI.Portal.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["loginUser"] ==null)
-            {
-                return RedirectToAction("Index", "UserLogin");
-            }
+            //if (Session["loginUser"] ==null)
+            //{
+            //    return RedirectToAction("Index", "UserLogin");
+            //}
 
             return View();
         }
