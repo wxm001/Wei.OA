@@ -35,6 +35,8 @@ namespace Wei.OA.BLL
 
         //}
 
+
+
         #region 由模板自动生成
         //public override void SetCurrentDal()
         //{

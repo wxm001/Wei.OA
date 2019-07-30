@@ -20,7 +20,19 @@ namespace Wei.OA.EFDAL
     {
 
 	}
+	public partial class R_UserInfo_ActionInfoDal:BaseDal<R_UserInfo_ActionInfo>,IR_UserInfo_ActionInfoDal
+    {
+
+	}
+	public partial class RoleInfoDal:BaseDal<RoleInfo>,IRoleInfoDal
+    {
+
+	}
 	public partial class UserInfoDal:BaseDal<UserInfo>,IUserInfoDal
+    {
+
+	}
+	public partial class UserInfoExtDal:BaseDal<UserInfoExt>,IUserInfoExtDal
     {
 
 	}

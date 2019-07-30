@@ -15,6 +15,29 @@ namespace Wei.OA.Model
     [Serializable]
     public partial class ActionInfo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ActionInfo()
+        {
+            this.DelFlag = 0;
+            this.RoleInfo = new HashSet<RoleInfo>();
+            this.R_UserInfo_ActionInfo = new HashSet<R_UserInfo_ActionInfo>();
+        }
+    
         public int Id { get; set; }
+        public short DelFlag { get; set; }
+        public string Remark { get; set; }
+        public System.DateTime ModfiliedOn { get; set; }
+        public System.DateTime SubTime { get; set; }
+        public string Url { get; set; }
+        public string HttpMethod { get; set; }
+        public string ActionName { get; set; }
+        public string IsMenu { get; set; }
+        public string MenuIcon { get; set; }
+        public int Sort { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoleInfo> RoleInfo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }
     }
 }

@@ -15,9 +15,16 @@ namespace Wei.OA.Model
     [Serializable]
     public partial class OrderInfo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public OrderInfo()
+        {
+            this.DelFlag = 0;
+        }
+    
         public int Id { get; set; }
         public string Content { get; set; }
         public int UserInfoId { get; set; }
+        public short DelFlag { get; set; }
     
         public virtual UserInfo UserInfo { get; set; }
     }

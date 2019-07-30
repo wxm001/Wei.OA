@@ -19,6 +19,12 @@ namespace Wei.OA.UI.Portal.Controllers
         {
             base.OnActionExecuting(filterContext);
 
+            #region 测试信息
+            //TODO：测试结束之后删除
+            return;
+            #endregion
+
+
             if (IsCheckUserLogin)
             {
                 //校验用户是否已经登录

@@ -27,5 +27,8 @@ namespace Wei.OA.IBLL
 
         bool Delete(T entity);
 
+        bool Delete(int id);
+
+        int DeleteListByLogical(List<int> strIds);
     }
 }

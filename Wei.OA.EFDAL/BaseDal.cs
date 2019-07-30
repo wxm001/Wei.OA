@@ -86,6 +86,25 @@ namespace Wei.OA.EFDAL
             return true;
         }
 
+        public bool Delete(int id)
+        {
+            var entity=Db.Set<T>().Find(id);
+            Db.Set<T>().Remove(entity);
+            return true;
+        }
+
+        //逻辑删除
+        public int DeleteListByLogical(List<int> strIds)
+        {
+            foreach (var strId in strIds)
+            {
+                var entity = Db.Set<T>().Find(strId);
+                Db.Entry(entity).Property("DelFlag").CurrentValue = (short)Wei.OA.Model.Enum.DelFlagEnum.Deleted;
+                Db.Entry(entity).Property("DelFlag").IsModified = true;
+            }
+
+            return strIds.Count;
+        }
 
         #endregion
 

@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 
 namespace Wei.OA.DALFactory
 {
+    using System.Data.Entity;
+
     using Wei.OA.EFDAL;
     using Wei.OA.IDAL;
 
@@ -25,7 +27,10 @@ namespace Wei.OA.DALFactory
         //public IUserInfoDal UserInfoDal => StaticDalFactory.GetUserInfoDal();
 
         //public IOrderInfoDal OrderInfoDal => StaticDalFactory.GetOrderInfoDal();
-
+        public DbContext Db
+        {
+            get { return DbContextFactory.GetCurrentDbContext(); }
+        }
         /// <summary>
         /// 拿到当前EF的上下文，然后把修改的实体进行整体提交,把数据提交的权利从数据库访问层提到了业务逻辑层
         /// </summary>

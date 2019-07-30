@@ -10,32 +10,172 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href="~/Content/MyCss/BetterTableCss.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.7.5/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.7.5/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Content/jquery-easyui-1.7.5/jquery.easyui.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.7.5/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/old/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/datapattern.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            initTalbe();
+
+            $('#addDialogDiv').css("display", "none");
+        });
+
+        //初始化表格
+        function initTalbe() {
+            $('#tt').datagrid({
+                url: '/UserInfo/GetAllUserInfos',
+                title: '用户信息列表',
+                width: 700,
+                height: 400,
+                fitColumns: true, //列自适应
+                nowrap: false,
+                idField: 'Id',//主键列的列名
+                loadMsg: '正在加载用户的信息...',
+                pagination: true,//是否有分页
+                singleSelect: false,//是否单行选择
+                pageSize: 10,//页大小，一页多少条数据
+                pageNumber: 1,//当前页，默认的
+                pageList: [10, 20, 30],
+                queryParams: {},//往后台传递参数
+                columns: [[//c.UserName, c.UserPass, c.Email, c.RegTime
+                    { field: 'ck', checkbox: true, align: 'left', width: 50 },
+                    { field: 'Id', title: '编号', width: 80 },
+                    { field: 'UName', title: '用户名', width: 120 },
+                    { field: 'Pwd', title: '密码', width: 120 },
+                    { field: 'Remark', title: '备注', width: 120 },
+                    {
+                        field: 'SubTime', title: '时间', width: 80, align: 'right',
+                        formatter: function (value, row, index) {
+                            return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d");
+                        }
+                    }
+                ]],
+                toolbar: [{
+                    id: 'btnDownShelf',
+                    text: '添加用户',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        //弹出添加对话框
+                        addClickEvent();
+                    }
+                }, {
+                        id: 'btnDelete',
+                        text: '删除用户',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            deleteEvent();
+                        }
+                    }],
+                onHeaderContextMenu: function (e, field) {
+
+                }
+            });
+        }
+        //当用户点击添加时弹出添加对话框
+        function addClickEvent() {
+            $('#addDialogDiv').css("display", "block");
+            $('#addDialogDiv').dialog({
+                title: "添加用户",
+                modal: true,
+                width: 400,
+                height: 400,
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizale: true,
+                buttons: [{
+                    id: 'btnOk',
+                    text: '添加',
+                    iconCls: 'icon-ok',
+                    handler: subAddForm  //把表单数据提交到后台
+                }, {
+                    id: 'btnCancel',
+                    text: '取消',
+                    iconCls: 'icon-cancel',
+                    handler: function () {
+                        $('#addDialogDiv').dialog("close");
+                    }
+                }]
+            });
+        }
+        //把表单数据提交到后台
+        function subAddForm() {
+            $('#addDialogDiv form').submit();
+        }
+        //添加成功过后执行的代码
+        function afterAdd(data) {
+            if (data == "ok") {
+                //关闭对话框，刷新表格
+                $('#addDialogDiv').dialog("close");
+                initTalbe();
+            } else {
+                $.messager.alert(data);
+            }
+        }
+
+        //删除按钮被点击时执行
+        function deleteEvent() {
+            //1.拿到easyui中选中的项
+            var rows = $('#tt').datagrid("getSelections");
+            if (!rows||rows.length==0) {
+                $.messager.alert("错误提醒", "请选择删除的数据！", "warning");
+                return;
+            }
+
+            var strId = "";
+            //2.删除数据
+            for (var i = 0; i < rows.length; i++) {
+                strId = strId + rows[i].Id + ",";//1,2,3,
+            }
+            strId = strId.substr(0, strId.length - 1);
+            //alert(strId);
+            $.post("/UserInfo/Delete",
+                { strId: strId },
+                function(data) {
+                    if (data=="ok") {
+                        initTalbe();
+                    } else {
+                        $.messager.alert("错误提醒", "删除失败！", "error");
+                    }
+                });
+        }
+
+    </script>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UName)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
+    <!--当前页面放表格数据的地方-->
+    <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit">
     </table>
+    
+    <!--弹出添加对话框-->
+<div id="addDialogDiv">
+    @using (Ajax.BeginForm("Add","UserInfo",new AjaxOptions(){OnSuccess = "afterAdd"}))
+    {
+        <table class="t3">
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" name="UName"/></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="text" name="Pwd"/></td>
+            </tr>
+            <tr>
+                <td>备注：</td>
+                <td><input type="text" name="Remark"/></td>
+            </tr>
+            <tr>
+                <td>昵称：</td>
+                <td><input type="text" name="ShowName"/></td>
+            </tr>
+        </table>
+    }
+
+</div>
 </body>
 </html>

@@ -17,6 +17,7 @@ namespace Wei.OA.BLL
 
     using Wei.OA.DALFactory;
     using Wei.OA.IDAL;
+    using Wei.OA.Model;
 
     /// <summary>
     /// BaseService
@@ -71,6 +72,30 @@ namespace Wei.OA.BLL
         {
             CurrentDal.Delete(entity);
             return DbSession.SaveChanges() > 0;
+        }
+
+        public bool Delete(int id)
+        {
+            CurrentDal.Delete(id);
+            return DbSession.SaveChanges() > 0;
+        }
+
+        //批量删除
+        public int DeleteList(List<int> strIds)
+        {
+            foreach (var id in strIds)
+            {
+                CurrentDal.Delete(id);
+            }
+
+            return DbSession.SaveChanges();
+        }
+
+        //逻辑删除
+        public int DeleteListByLogical(List<int> strIds)
+        {
+            CurrentDal.DeleteListByLogical(strIds);
+            return DbSession.SaveChanges();
         }
     }
 }
