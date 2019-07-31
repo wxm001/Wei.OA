@@ -81,7 +81,10 @@ namespace Wei.OA.EFDAL
 
         public bool Delete(T entity)
         {
-            this.Db.Entry(entity).State = EntityState.Deleted;
+            //this.Db.Entry(entity).State = EntityState.Deleted;
+            //逻辑删除
+            Db.Entry(entity).Property("DelFlag").CurrentValue = (short)Wei.OA.Model.Enum.DelFlagEnum.Deleted;
+            Db.Entry(entity).Property("DelFlag").IsModified = true;
             //return this.Db.SaveChanges() > 0;
             return true;
         }
@@ -89,7 +92,10 @@ namespace Wei.OA.EFDAL
         public bool Delete(int id)
         {
             var entity=Db.Set<T>().Find(id);
-            Db.Set<T>().Remove(entity);
+            //Db.Set<T>().Remove(entity);
+            //逻辑删除
+            Db.Entry(entity).Property("DelFlag").CurrentValue = (short)Wei.OA.Model.Enum.DelFlagEnum.Deleted;
+            Db.Entry(entity).Property("DelFlag").IsModified = true;
             return true;
         }
 

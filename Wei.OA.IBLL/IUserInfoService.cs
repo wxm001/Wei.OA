@@ -10,5 +10,6 @@ namespace Wei.OA.IBLL
 
     public partial interface IUserInfoService:IBaseService<UserInfo>
     {
+        IQueryable<UserInfo> LoadPageData(Model.Param.UserQueryParam userQueryParam);
     }
 }

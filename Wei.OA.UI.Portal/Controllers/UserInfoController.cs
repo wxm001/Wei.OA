@@ -11,6 +11,7 @@ namespace Wei.OA.UI.Portal.Controllers
     using Wei.OA.BLL;
     using Wei.OA.IBLL;
     using Wei.OA.Model;
+    using Wei.OA.Model.Param;
 
     public class UserInfoController : BaseController
     {
@@ -34,16 +35,42 @@ namespace Wei.OA.UI.Portal.Controllers
             int total = 0;
 
 
-            short delFlagNormal = (short)Wei.OA.Model.Enum.DelFlagEnum.Normal;
+            //过滤用户名  过滤备注 ,没有过滤信息直接拿到所有
             //拿到当前页的数据,带有导航属性时，使用select过滤一下
-            var pageData = UserInfoService.GetPageEntities(
-                pageSize,
-                pageIndex,
-                out total,
-                u => u.DelFlag == delFlagNormal,
-                u => u.Id,
-                true).Select(u => new { u.Id, u.UName, u.Remark, u.ShowName, u.SubTime, u.ModfiliedOn, u.Pwd });
-            var data = new { total = total, rows = pageData.ToList() };
+            string schName = Request["schName"];
+            string schRemark = Request["schRemark"];
+
+            short delFlagNormal = (short)Wei.OA.Model.Enum.DelFlagEnum.Normal;
+
+            var queryParam = new UserQueryParam()
+                                 {
+                                     PageIndex = pageIndex,
+                                     PageSize = pageSize,
+                                     Total = 0,
+                                     SchName = schName,
+                                     SchRemark = schRemark
+                                 };
+            var pageData=UserInfoService.LoadPageData(queryParam);
+            var temp = pageData.Select(
+                u => new
+                         {
+                             u.Id,
+                             u.UName,
+                             u.Remark,
+                             u.ShowName,
+                             u.SubTime,
+                             u.ModfiliedOn,
+                             u.Pwd
+                         });
+            ////拿到当前页的数据,带有导航属性时，使用select过滤一下
+            //var pageData = UserInfoService.GetPageEntities(
+            //    pageSize,
+            //    pageIndex,
+            //    out total,
+            //    u => u.DelFlag == delFlagNormal,
+            //    u => u.Id,
+            //    true).Select(u => new { u.Id, u.UName, u.Remark, u.ShowName, u.SubTime, u.ModfiliedOn, u.Pwd });
+            var data = new { total = queryParam.Total, rows = temp.ToList() };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -54,6 +81,7 @@ namespace Wei.OA.UI.Portal.Controllers
         {
             userInfo.ModfiliedOn=DateTime.Now;
             userInfo.SubTime=DateTime.Now;
+            userInfo.ModfiliedOn=DateTime.Now;
             userInfo.DelFlag = (short)Wei.OA.Model.Enum.DelFlagEnum.Normal;
 
             UserInfoService.Add(userInfo);
@@ -80,6 +108,26 @@ namespace Wei.OA.UI.Portal.Controllers
             }
 
             UserInfoService.DeleteListByLogical(idList);
+            return Content("ok");
+        }
+
+        #endregion
+
+        #region 修改用户
+
+
+        public ActionResult Edit(int id)
+        {
+            UserInfo userInfo = UserInfoService.GetEntities(u => u.Id == id).FirstOrDefault();
+            userInfo.SubTime=DateTime.Now;
+            ViewData.Model = userInfo;
+            return this.View();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(UserInfo userInfo)
+        {
+            UserInfoService.Update(userInfo);
             return Content("ok");
         }
 

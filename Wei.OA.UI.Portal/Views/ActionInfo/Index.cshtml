@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Wei.OA.Model.ActionInfo>
-
 @{
     Layout = null;
 }
@@ -10,26 +9,312 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href="~/Content/MyCss/BetterTableCss.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.7.5/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.7.5/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Content/jquery-easyui-1.7.5/jquery.easyui.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.7.5/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/old/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/datapattern.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            initTalbe();
+
+            $('#addDialogDiv').css("display", "none");
+            $('#editDialogDiv').css("display", "none");
+            bindSearchBtnClick();
+
+        });
+        //绑定搜索查询事件
+        function bindSearchBtnClick() {
+            $("#btnSearch").click(function () {
+                var data = { schName: $("#txtSearchName").val(), schRemark: $("#txtSearchRemark").val() };
+                initTalbe(data);
+            });
+        }
+
+        //初始化表格
+        function initTalbe(pars) {
+            $('#tt').datagrid({
+                url: '/ActionInfo/GetAllActionInfos',
+                title: '权限信息列表',
+                width: 700,
+                height: 400,
+                fitColumns: true, //列自适应
+                nowrap: false,
+                idField: 'Id', //主键列的列名
+                loadMsg: '正在加载权限的信息...',
+                pagination: true, //是否有分页
+                singleSelect: false, //是否单行选择
+                pageSize: 10, //页大小，一页多少条数据
+                pageNumber: 1, //当前页，默认的
+                pageList: [10, 20, 30],
+                queryParams: pars, //往后台传递参数
+                columns: [
+                    [//a.Id,a.IsMenu,a.Url,a.Remark,a.Sort,a.ActionName,a.ModfiliedOn,a.SubTime,a.HttpMethod,a.MenuIcon
+                        { field: 'ck', checkbox: true, align: 'left', width: 50 },
+                        { field: 'Id', title: '编号', width: 80 },
+                        { field: 'ActionName', title: '权限名', width: 120 },
+                        { field: 'Sort', title: '排序', width: 80 },
+                        {
+                            field: 'IsMenu', title: '是否是菜单', width: 120,
+                            formatter: function (value, row, index) {
+                                return value ? "是" : "否";
+                            }
+                        },
+                        {
+                            field: 'MenuIcon', title: '菜单图片', width: 120,
+                            formatter: function (value, row, index) {
+                                return "<img src='" + value + "' width='20px' height='20px' />";
+                            }
+                        },
+                        { field: 'Remark', title: '备注', width: 120 },
+                        {
+                            field: 'SubTime',
+                            title: '提交时间',
+                            width: 120,
+                            formatter: function (value, row, index) {
+                                return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d");
+                            }
+                        },
+                        {
+                            field: 'ModfiliedOn', title: '操作', width: 120, formatter: function (value, row, index) {
+                                var str = "";
+                                str += "<a href='javascript:void(0)' class='editLink' uid='" + row.Id + "'>修改</a> &nbsp;&nbsp;";
+                                str += "<a href='javascript:void(0)' class='deleteLink' uid='" + row.Id + "'>删除</a>";
+                                return str;
+                            }
+                        }
+                    ]
+                ],
+                toolbar: [
+                    {
+                        id: 'btnDownShelf',
+                        text: '添加权限',
+                        iconCls: 'icon-add',
+                        handler: function () {
+                            //弹出添加对话框
+                            addClickEvent();
+                        }
+                    }, {
+                        id: 'btnDelete',
+                        text: '删除权限',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            //1.拿到easyui中选中的项
+                            var rows = $('#tt').datagrid("getSelections");
+                            if (!rows || rows.length == 0) {
+                                $.messager.alert("错误提醒", "请选择删除的数据！", "warning");
+                                return;
+                            }
+                            var strId = "";
+                            //2.删除数据
+                            for (var i = 0; i < rows.length; i++) {
+                                strId = strId + rows[i].Id + ","; //1,2,3,
+                            }
+                            strId = strId.substr(0, strId.length - 1);
+                            deleteEvent(strId);
+                        }
+                    }, {
+                        id: 'btnEdit',
+                        text: '修改权限',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+                            //校验是否只选中了一个权限
+                            var rows = $('#tt').datagrid("getSelections");
+                            if (rows.length != 1) {
+                                $.messager.alert("错误提醒", "请选中一行要修改的数据！", "warning");
+                                return;
+                            }
+                            editEvent(rows[0].Id);
+                        }
+                    }
+                ],
+                onHeaderContextMenu: function (e, field) {
+
+                },
+                onLoadSuccess: function (data) {
+                    $('.editLink').click(function () {
+                        editEvent($(this).attr("uid"));
+                        return false;
+                    });
+                    $('.deleteLink').click(function () {
+                        deleteEvent($(this).attr("uid"));
+                        return false;
+                    });
+                }
+            });
+        }
+
+        //当点击添加时弹出添加对话框
+        function addClickEvent() {
+            $('#addDialogDiv').css("display", "block");
+            $('#addDialogDiv').dialog({
+                title: "添加权限",
+                modal: true,
+                width: 400,
+                height: 400,
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizale: true,
+                buttons: [
+                    {
+                        id: 'btnOk',
+                        text: '添加',
+                        iconCls: 'icon-ok',
+                        handler: subAddForm //把表单数据提交到后台
+                    }, {
+                        id: 'btnCancel',
+                        text: '取消',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            $('#addDialogDiv').dialog("close");
+                        }
+                    }
+                ]
+            });
+        }
+
+        //把表单数据提交到后台
+        function subAddForm() {
+            $('#addDialogDiv form').submit();
+        }
+
+        //添加成功过后执行的代码
+        function afterAdd(data) {
+            if (data == "ok") {
+                //关闭对话框，刷新表格
+                $('#addDialogDiv').dialog("close");
+                initTalbe();
+            } else {
+                $.messager.alert(data);
+            }
+        }
+
+        //删除按钮被点击时执行
+        function deleteEvent(strId) {
+            //alert(strId);
+            $.messager.confirm("提示", "确定要删除该记录?", function (r) {
+                if (r) {
+                    $.post("/UserInfo/Delete",
+                        { strId: strId },
+                        function (data) {
+                            if (data == "ok") {
+                                initTalbe();
+                            } else {
+                                $.messager.alert("错误提醒", "删除失败！", "error");
+                            }
+                        });
+                }
+            });
+        }
+
+        //修改按钮点击时弹出对话框
+        function editEvent(id) {
+
+            //给iframe的src赋值
+            $('#editFrame').attr("src", "/UserInfo/Edit/" + id);
+
+            $('#editDialogDiv').css("display", "block");
+            $('#editDialogDiv').dialog({
+                title: "修改权限",
+                modal: true,
+                width: 400,
+                height: 400,
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizale: true,
+                buttons: [
+                    {
+                        id: 'btnOk',
+                        text: '修改',
+                        iconCls: 'icon-ok',
+                        handler: function () {
+                            $('#editFrame')[0].contentWindow.submitForm();//调用子容器提交表单方法
+                        }
+                    }, {
+                        id: 'btnCancel',
+                        text: '取消',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            $('#editDialogDiv').dialog("close");
+                        }
+                    }
+                ]
+            });
+        }
+
+        //修改成功之后由子容器调用
+        function afterEditSuccess() {
+            $('#editDialogDiv').dialog("close");
+            initTalbe();
+        }
+
+    </script>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
-    </table>
+
+    <div>
+        权限名：<input type="text" id="txtSearchName" name="txtSearchName" />
+        备注：<input type="text" id="txtSearchRemark" name="txtSearchRemark" />
+        <input type="button" id="btnSearch" value="搜索" />
+    </div>
+
+
+    <!--当前页面放表格数据的地方-->
+    <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
+
+    <!--弹出添加对话框-->
+    <div id="addDialogDiv">
+        @using (Ajax.BeginForm("Add", "ActionInfo", new AjaxOptions() { OnSuccess = "afterAdd" }))
+        {
+            <table class="t2">
+                <tr>
+                    <td>权限名：</td>
+                    <td><input type="text" name="ActionName" /></td>
+                </tr>
+                <tr>
+                    <td>URL：</td>
+                    <td><input type="text" name="Url" /></td>
+                </tr>
+                <tr>
+                    <td>Http方法类型：</td>
+                    <td>
+                        <select name="HttpMethod">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>是否是菜单：</td>
+                    <td><input type="checkbox" value="true" name="IsMenu" /></td>
+                </tr>
+                <tr>
+                    <td>菜单的图标地址：</td>
+                    <td><input type="text" name="MenuIcon" /></td>
+                </tr>
+                <tr>
+                    <td>排序：</td>
+                    <td><input type="text" name="Sort" /></td>
+                </tr>
+                <tr>
+                    <td>备注：</td>
+                    <td><input type="text" name="Remark" /></td>
+                </tr>
+            </table>
+        }
+
+    </div>
+
+    <!--弹出修改对话框-->
+    <div id="editDialogDiv">
+        <iframe id="editFrame" src="javascript:void(0)" frameborder="0" width="100%" height="100%" scrolling="no"></iframe>
+
+    </div>
 </body>
 </html>

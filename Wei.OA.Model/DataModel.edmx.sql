@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/30/2019 17:35:54
+-- Date Created: 07/31/2019 19:16:42
 -- Generated from EDMX file: E:\vs项目\OA项目\Wei.OA\Wei.OA.Model\DataModel.edmx
 -- --------------------------------------------------
 
@@ -102,11 +102,11 @@ CREATE TABLE [dbo].[ActionInfo] (
     [ModfiliedOn] datetime  NOT NULL,
     [SubTime] datetime  NOT NULL,
     [Url] nvarchar(512)  NOT NULL,
-    [HttpMethod] nvarchar(32)  NOT NULL,
-    [ActionName] nvarchar(max)  NOT NULL,
-    [IsMenu] nvarchar(max)  NOT NULL,
+    [HttpMethod] nvarchar(32)  NULL,
+    [ActionName] nvarchar(32)  NOT NULL,
+    [IsMenu] bit  NOT NULL,
     [MenuIcon] nvarchar(512)  NULL,
-    [Sort] int  NOT NULL
+    [Sort] int  NULL
 );
 GO
 
