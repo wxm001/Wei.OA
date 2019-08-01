@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IActionInfoService.cs" />
     <Compile Include="IService.cs">
       <DependentUpon>IService.tt</DependentUpon>
       <AutoGen>True</AutoGen>

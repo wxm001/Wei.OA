@@ -68,5 +68,22 @@ namespace Wei.OA.BLL
                 .Take(userQueryParam.PageSize).AsQueryable();
 
         }
+        
+        //用户和角色关联
+        public bool SetRole(int userId, List<int> roleIds)
+        {
+            //找到用户
+            var user=DbSession.UserInfoDal.GetEntities(u => u.Id == userId).FirstOrDefault();
+            user.RoleInfo.Clear(); //把之前的关联都删了，换下面新的（省的判断）
+            //找到所有角色
+            var allRoles = DbSession.RoleInfoDal.GetEntities(r => roleIds.Contains(r.Id));
+            foreach (var role in allRoles)
+            {
+                user.RoleInfo.Add(role); //加新角色 
+            }
+
+            DbSession.SaveChanges();
+            return true;
+        }
     }
 }

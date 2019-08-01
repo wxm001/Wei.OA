@@ -1,0 +1,66 @@
+﻿@using Wei.OA.Model
+@model Wei.OA.Model.ActionInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SetRole</title>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/old/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function afterSetRole(data) {
+            if (data=="ok") {
+                window.parent.window.afterSetRole();//调用父容器方法关闭窗口
+            } else {
+                alert("失败");
+            }
+        }
+        //供父容器调用提交表单
+        function submitForm() {
+            $("form").submit();
+        }
+    </script>
+</head>
+<body>
+<div>
+    <h2>当前给权限：@Model.ActionName 设置角色</h2>
+    <hr/>
+    @{
+        List<RoleInfo> allRoleInfos = ViewBag.AllRoles;//所有角色
+        List<int> exitsRoleIdList = ViewBag.ExitsRoles;//所有当前权限已经存在的角色
+
+        using (Ajax.BeginForm("ProcessSetRole","ActionInfo",new AjaxOptions(){OnSuccess = "afterSetRole"}))
+        {
+            <input type="hidden" name="ActionId" value="@Model.Id"/>//使用隐藏域把要设置角色的权限id传出来
+
+            int i = 0;
+            foreach (var roleInfo in allRoleInfos)
+            {
+                string str = "ckb_" + roleInfo.Id;
+                if (i%3==0&&i!=0)
+                {
+                    <hr/>
+                }
+                if (exitsRoleIdList.Contains(roleInfo.Id))
+                {
+                    <input type="checkbox"checked="checked" name="@str" value="@str" id="@str" />
+                }
+                else
+                {
+                    <input type="checkbox" name="@str" value="@str" id="@str" />
+                }
+                
+                <label for="@str">@roleInfo.RoleName</label>
+                i++;
+            }
+        }
+    }
+</div>
+</body>
+</html>

@@ -164,6 +164,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderInfoController.cs" />
+    <Compile Include="Controllers\RoleInfoController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\UserLoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1432,6 +1433,7 @@
     <Content Include="Content\lib\ligerUI\skins\Silvery\images\layout\tabs-item-right-bg.gif" />
     <Content Include="Content\lib\ligerUI\skins\Silvery\images\layout\tabs-tools.gif" />
     <Content Include="Content\MyCss\BetterTableCss.css" />
+    <Content Include="Content\MyCss\tableStyle.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1481,6 +1483,7 @@
     <Content Include="Scripts\old\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\old\jquery.validate.min.js" />
     <Content Include="Scripts\old\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\old\MyAjaxForm.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1499,9 +1502,16 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UserInfo\Edit.cshtml" />
     <Content Include="Views\ActionInfo\Index.cshtml" />
+    <Content Include="Views\ActionInfo\Edit.cshtml" />
+    <Content Include="Views\RoleInfo\Index.cshtml" />
+    <Content Include="Views\RoleInfo\Edit.cshtml" />
+    <Content Include="Views\UserInfo\SetRole.cshtml" />
+    <Content Include="Views\ActionInfo\SetRole.cshtml" />
+    <Content Include="Views\UserInfo\SetAction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadFiles\UploadImages\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

@@ -3,14 +3,21 @@
 
   <object type="Wei.OA.UI.Portal.Controllers.UserInfoController, Wei.OA.UI.Portal" singleton="false" >
     <property name="UserInfoService" ref ="UserInfoService" />
+    <property name="RoleInfoService" ref ="RoleInfoService" />
+    <property name="ActionInfoService" ref ="ActionInfoService" />
+    <property name="IR_UserInfo_ActionInfoService" ref ="IR_UserInfo_ActionInfoService" />    
   </object>
   <object type="Wei.OA.UI.Portal.Controllers.OrderInfoController, Wei.OA.UI.Portal" singleton="false" >
     <property name="OrderInfoService" ref ="OrderInfoService" />
   </object>
   <object type="Wei.OA.UI.Portal.Controllers.ActionInfoController, Wei.OA.UI.Portal" singleton="false" >
     <property name="ActionInfoService" ref ="ActionInfoService" />
+    <property name="RoleInfoService" ref ="RoleInfoService" />
   </object>
   <object type="Wei.OA.UI.Portal.Controllers.UserLoginController, Wei.OA.UI.Portal" singleton="false" >
     <property name="UserInfoService" ref ="UserInfoService" />
+  </object>
+  <object type="Wei.OA.UI.Portal.Controllers.RoleInfoController, Wei.OA.UI.Portal" singleton="false" >
+    <property name="RoleInfoService" ref ="RoleInfoService" />
   </object>
 </objects>

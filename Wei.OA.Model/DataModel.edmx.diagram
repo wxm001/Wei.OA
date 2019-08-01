@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="DataModel.RoleInfo" Width="1.5" PointX="7.625" PointY="0.5" />
         <AssociationConnector Association="DataModel.UserInfoRoleInfo" />
         <AssociationConnector Association="DataModel.RoleInfoActionInfo" />
-        <EntityTypeShape EntityType="DataModel.R_UserInfo_ActionInfo" Width="1.5" PointX="8" PointY="3.25" />
+        <EntityTypeShape EntityType="DataModel.R_UserInfo_ActionInfo" Width="1.5" PointX="7.625" PointY="3.375" />
         <AssociationConnector Association="DataModel.UserInfoR_UserInfo_ActionInfo" />
         <AssociationConnector Association="DataModel.ActionInfoR_UserInfo_ActionInfo" />
         <EntityTypeShape EntityType="DataModel.UserInfoExt" Width="1.5" PointX="0.75" PointY="1.25" />

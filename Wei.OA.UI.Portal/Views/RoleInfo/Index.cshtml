@@ -1,6 +1,8 @@
-﻿@model IEnumerable<Wei.OA.Model.ActionInfo>
+﻿@model IEnumerable<Wei.OA.Model.RoleInfo>
 @{
-    Layout = null;
+                /**/
+
+                Layout = null;
 }
 
 <!DOCTYPE html>
@@ -24,54 +26,20 @@
 
             $('#addDialogDiv').css("display", "none");
             $('#editDialogDiv').css("display", "none");
-            $('#setRoleDialogDiv').css("display", "none");
-            $('#trIconUrl').css("display", "none");
-            //bindSearchBtnClick();
-            bindCkbIsMenu();
-            bindUploadBtnClick();
+
         });
-
-        ////绑定搜索查询事件
-        //function bindSearchBtnClick() {
-        //    $("#btnSearch").click(function () {
-        //        var data = { schName: $("#txtSearchName").val(), schRemark: $("#txtSearchRemark").val() };
-        //        initTalbe(data);
-        //    });
-        //}
-        //绑定ismenu改变事件
-        function bindCkbIsMenu() {
-            $('#ckbIsMenu').change(function() {
-                //显示或隐藏图标地址
-                $('#trIconUrl').toggle();
-            });
-        }
-        //绑定上传图片按钮点击事件
-        function bindUploadBtnClick() {
-            $('#btnUploadFile').click(function() {
-                $('#addDialogDiv form').ajaxSubmit({
-                    url: "/ActionInfo/UploadImage",
-                    type:"Post",
-                    success: function(data) {
-                        //返回的url地址放到页面隐藏域
-                        $('#MenuIcon').val(data);
-                        $('#uploadImg').html("<img src='" + data + "' style='width:40px;height:40px' />");
-                    }                                       
-            });
-            });
-        }
-
 
         //初始化表格
         function initTalbe(pars) {
             $('#tt').datagrid({
-                url: '/ActionInfo/GetAllActionInfos',
-                title: '权限信息列表',
+                url: '/RoleInfo/GetAllRoleInfos',
+                title: '角色信息列表',
                 width: 700,
                 height: 400,
                 fitColumns: true, //列自适应
                 nowrap: false,
                 idField: 'Id', //主键列的列名
-                loadMsg: '正在加载权限的信息...',
+                loadMsg: '正在加载角色的信息...',
                 pagination: true, //是否有分页
                 singleSelect: false, //是否单行选择
                 pageSize: 10, //页大小，一页多少条数据
@@ -79,23 +47,10 @@
                 pageList: [10, 20, 30],
                 queryParams: pars, //往后台传递参数
                 columns: [
-                    [//a.Id,a.IsMenu,a.Url,a.Remark,a.Sort,a.ActionName,a.ModfiliedOn,a.SubTime,a.HttpMethod,a.MenuIcon
+                    [//a.Id, a.Remark, a.RoleName, a.ModfiliedOn, a.SubTime, a.DelFlag 
                         { field: 'ck', checkbox: true, align: 'left', width: 50 },
                         { field: 'Id', title: '编号', width: 80 },
-                        { field: 'ActionName', title: '权限名', width: 120 },
-                        { field: 'Sort', title: '排序', width: 80 },
-                        {
-                            field: 'IsMenu', title: '是否是菜单', width: 120,
-                            formatter: function (value, row, index) {
-                                return value ? "是" : "否";
-                            }
-                        },
-                        {
-                            field: 'MenuIcon', title: '菜单图片', width: 120,
-                            formatter: function (value, row, index) {
-                                return "<img src='" + value + "' width='20px' height='20px' />";
-                            }
-                        },
+                        { field: 'RoleName', title: '角色名', width: 120 },
                         { field: 'Remark', title: '备注', width: 120 },
                         {
                             field: 'SubTime',
@@ -118,7 +73,7 @@
                 toolbar: [
                     {
                         id: 'btnDownShelf',
-                        text: '添加权限',
+                        text: '添加角色',
                         iconCls: 'icon-add',
                         handler: function () {
                             //弹出添加对话框
@@ -126,7 +81,7 @@
                         }
                     }, {
                         id: 'btnDelete',
-                        text: '删除权限',
+                        text: '删除角色',
                         iconCls: 'icon-cancel',
                         handler: function () {
                             //1.拿到easyui中选中的项
@@ -145,10 +100,10 @@
                         }
                     }, {
                         id: 'btnEdit',
-                        text: '修改权限',
+                        text: '修改角色',
                         iconCls: 'icon-edit',
                         handler: function () {
-                            //校验是否只选中了一个权限
+                            //校验是否只选中了一个角色
                             var rows = $('#tt').datagrid("getSelections");
                             if (rows.length != 1) {
                                 $.messager.alert("错误提醒", "请选中一行要修改的数据！", "warning");
@@ -156,15 +111,7 @@
                             }
                             editEvent(rows[0].Id);
                         }
-                    }, {
-                        id: 'btnSetRole',
-                        text: '设置角色',
-                        iconCls: 'icon-redo',
-                        handler: function () {
-                            //判断是否选择一个权限进行角色设置，然后再弹出角色设置对话框
-                            setRole();
-                        }
-                     }
+                    }
                 ],
                 onHeaderContextMenu: function (e, field) {
 
@@ -182,66 +129,14 @@
             });
         }
 
-        //设置权限角色
-        function setRole() {
-            //校验是否只选中了一个用户
-            var rows = $('#tt').datagrid("getSelections");
-            if (rows.length != 1) {
-                $.messager.alert("错误提醒", "请选中一个权限进行设置！", "warning");
-                return;
-            }
-            
-            //给iframe的src赋值
-            $('#setRoleFrame').attr("src", "/ActionInfo/SetRole/" + rows[0].Id);
-            //弹出角色设置框
-            $('#setRoleDialogDiv').css("display", "block");
-            $('#setRoleDialogDiv').dialog({
-                title: "设置权限角色",
-                modal: true,
-                width: 400,
-                height: 400,
-                collapsible: true,
-                minimizable: true,
-                maximizable: true,
-                resizale: true,
-                buttons: [
-                    {
-                        id: 'btnOk',
-                        text: '设置',
-                        iconCls: 'icon-ok',
-                        handler: function () {
-                            $('#setRoleFrame')[0].contentWindow.submitForm();//调用子容器提交表单方法
-                        }
-                    }, {
-                        id: 'btnCancel',
-                        text: '取消',
-                        iconCls: 'icon-cancel',
-                        handler: function () {
-                            $('#setRoleDialogDiv').dialog("close");
-                        }
-                    }
-                ]
-            });
-
-        }
-
-        //设置角色之后关闭对话框，供子容器调用
-        function afterSetRole() {
-            $('#setRoleDialogDiv').dialog("close");
-        }
-
-
-
-
-
         //当点击添加时弹出添加对话框
         function addClickEvent() {
             $('#addDialogDiv').css("display", "block");
             $('#addDialogDiv').dialog({
-                title: "添加权限",
+                title: "添加角色",
                 modal: true,
                 width: 400,
-                height: 400,
+                height: 300,
                 collapsible: true,
                 minimizable: true,
                 maximizable: true,
@@ -285,7 +180,7 @@
             //alert(strId);
             $.messager.confirm("提示", "确定要删除该记录?", function (r) {
                 if (r) {
-                    $.post("/ActionInfo/Delete",
+                    $.post("/RoleInfo/Delete",
                         { strId: strId },
                         function (data) {
                             if (data == "ok") {
@@ -302,14 +197,14 @@
         function editEvent(id) {
 
             //给iframe的src赋值
-            $('#editFrame').attr("src", "/ActionInfo/Edit/" + id);
+            $('#editFrame').attr("src", "/RoleInfo/Edit/" + id);
 
             $('#editDialogDiv').css("display", "block");
             $('#editDialogDiv').dialog({
-                title: "修改权限",
+                title: "修改角色",
                 modal: true,
                 width: 400,
-                height: 500,
+                height: 300,
                 collapsible: true,
                 minimizable: true,
                 maximizable: true,
@@ -344,54 +239,20 @@
 </head>
 <body>
 
-    @*<div>
-        权限名：<input type="text" id="txtSearchName" name="txtSearchName" />
-        备注：<input type="text" id="txtSearchRemark" name="txtSearchRemark" />
-        <input type="button" id="btnSearch" value="搜索" />
-    </div>*@
-
 
     <!--当前页面放表格数据的地方-->
     <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
 
     <!--弹出添加对话框-->
     <div id="addDialogDiv">
-        @using (Ajax.BeginForm("Add", "ActionInfo", new AjaxOptions() { OnSuccess = "afterAdd" }))
+        @using (Ajax.BeginForm("Add", "RoleInfo", new AjaxOptions() { OnSuccess = "afterAdd" }))
         {
             <table class="t2">
                 <tr>
-                    <td>权限名：</td>
-                    <td><input type="text" name="ActionName" /></td>
+                    <td>角色名：</td>
+                    <td><input type="text" name="RoleName" /></td>
                 </tr>
-                <tr>
-                    <td>URL：</td>
-                    <td><input type="text" name="Url" /></td>
-                </tr>
-                <tr>
-                    <td>Http方法类型：</td>
-                    <td>
-                        <select name="HttpMethod">
-                            <option value="GET">GET</option>
-                            <option value="POST">POST</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>是否是菜单：</td>
-                    <td><input type="checkbox" id="ckbIsMenu" value="true" name="IsMenu" /></td>
-                </tr>
-                <tr id="trIconUrl">
-                    <td>菜单的图标地址：</td>
-                    <td><input type="hidden" id="MenuIcon" name="MenuIcon" />
-                        <input type="file" id="fileMenuIcon" name="fileMenuIcon"/>
-                        <input type="button" value="上传" id="btnUploadFile"/>
-                        <div id="uploadImg"></div>
-                        </td>
-                </tr>
-                <tr>
-                    <td>排序：</td>
-                    <td><input type="text" name="Sort" /></td>
-                </tr>
+                                                            
                 <tr>
                     <td>备注：</td>
                     <td><input type="text" name="Remark" /></td>
@@ -402,14 +263,9 @@
     </div>
 
     <!--弹出修改对话框-->
-<div id="editDialogDiv">
-    <iframe id="editFrame" src="javascript:void(0)" frameborder="0" width="100%" height="100%" scrolling="no"></iframe>
+    <div id="editDialogDiv">
+        <iframe id="editFrame" src="javascript:void(0)" frameborder="0" width="100%" height="100%" scrolling="no"></iframe>
 
-</div>
-<!--弹出角色设置对话框-->
-<div id="setRoleDialogDiv">
-    <iframe id="setRoleFrame" src="javascript:void(0)" frameborder="0" width="100%" height="100%" scrolling="no"></iframe>
-
-</div>
+    </div>
 </body>
 </html>
