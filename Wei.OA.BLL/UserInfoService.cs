@@ -85,5 +85,23 @@ namespace Wei.OA.BLL
             DbSession.SaveChanges();
             return true;
         }
+        //找到用户权限中间表中的权限id和状态
+        public List<string> GetRUserAction(UserInfo user)
+        {
+            List<string> res=new List<string>();
+            List<int> actList = (from r in user.R_UserInfo_ActionInfo where r.DelFlag==0 select r.ActionInfoId).ToList();
+            List<bool> actState = (from r in user.R_UserInfo_ActionInfo where r.DelFlag == 0 select r.HasPermission).ToList();
+            if (actList!=null)
+            {
+                for (int i = 0; i < actList.Count; i++)
+                {
+                    string str = actState[i] ? "1" : "0";
+                    str = str + "," + actList[i];
+                    res.Add(str);
+                }
+            }
+
+            return res;
+        }
     }
 }

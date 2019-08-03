@@ -5,7 +5,7 @@
     <property name="UserInfoService" ref ="UserInfoService" />
     <property name="RoleInfoService" ref ="RoleInfoService" />
     <property name="ActionInfoService" ref ="ActionInfoService" />
-    <property name="IR_UserInfo_ActionInfoService" ref ="IR_UserInfo_ActionInfoService" />    
+    <property name="R_UserInfo_ActionInfoService" ref ="R_UserInfo_ActionInfoService" />    
   </object>
   <object type="Wei.OA.UI.Portal.Controllers.OrderInfoController, Wei.OA.UI.Portal" singleton="false" >
     <property name="OrderInfoService" ref ="OrderInfoService" />
@@ -19,5 +19,10 @@
   </object>
   <object type="Wei.OA.UI.Portal.Controllers.RoleInfoController, Wei.OA.UI.Portal" singleton="false" >
     <property name="RoleInfoService" ref ="RoleInfoService" />
+  </object>
+
+  <object type="Wei.OA.UI.Portal.Controllers.HomeController, Wei.OA.UI.Portal" singleton="false" >
+    <property name="UserInfoService" ref ="UserInfoService" />
+    <property name="ActionInfoService" ref ="ActionInfoService" />
   </object>
 </objects>

@@ -16,10 +16,10 @@
 
   <object name="UserInfoService" type="Wei.OA.BLL.UserInfoService, Wei.OA.BLL" singleton="false" >
     <property name="DbSession" ref="DbSession"/>
-    <property name="CurrentDal" ref="UserInfoDal"/>
-    <object name="R_UserInfo_ActionInfoService" type="Wei.OA.BLL.R_UserInfo_ActionInfoService, Wei.OA.BLL" singleton="false" >
-      <property name="DbSession" ref="DbSession"/>
-      <property name="CurrentDal" ref="R_UserInfo_ActionInfoDal"/>
+    <property name="CurrentDal" ref="UserInfoDal"/>   
     </object>
+  <object name="R_UserInfo_ActionInfoService" type="Wei.OA.BLL.R_UserInfo_ActionInfoService, Wei.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession"/>
+    <property name="CurrentDal" ref="R_UserInfo_ActionInfoDal"/>
   </object>
 </objects>

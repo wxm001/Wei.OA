@@ -99,6 +99,7 @@
     <Compile Include="RoleInfo.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RUserActionModel.cs" />
     <Compile Include="R_UserInfo_ActionInfo.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

@@ -22,7 +22,7 @@ namespace Wei.OA.Model
         }
     
         public int Id { get; set; }
-        public string HasPermission { get; set; }
+        public bool HasPermission { get; set; }
         public int UserInfoId { get; set; }
         public int ActionInfoId { get; set; }
         public short DelFlag { get; set; }

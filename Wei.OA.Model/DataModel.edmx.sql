@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/31/2019 19:16:42
+-- Date Created: 08/02/2019 11:09:46
 -- Generated from EDMX file: E:\vs项目\OA项目\Wei.OA\Wei.OA.Model\DataModel.edmx
 -- --------------------------------------------------
 
@@ -124,7 +124,7 @@ GO
 -- Creating table 'R_UserInfo_ActionInfo'
 CREATE TABLE [dbo].[R_UserInfo_ActionInfo] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [HasPermission] nvarchar(max)  NOT NULL,
+    [HasPermission] bit  NOT NULL,
     [UserInfoId] int  NOT NULL,
     [ActionInfoId] int  NOT NULL,
     [DelFlag] smallint  NOT NULL

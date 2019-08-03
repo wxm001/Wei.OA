@@ -97,7 +97,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="HasPermission" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="HasPermission" Type="bit" Nullable="false" />
     <Property Name="UserInfoId" Type="int" Nullable="false" />
     <Property Name="ActionInfoId" Type="int" Nullable="false" />
     <Property Name="DelFlag" Type="smallint" Nullable="false" DefaultValue="0" />
@@ -327,7 +327,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HasPermission" Type="String" Nullable="false" />
+          <Property Name="HasPermission" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="UserInfo" Relationship="DataModel.UserInfoR_UserInfo_ActionInfo" FromRole="R_UserInfo_ActionInfo" ToRole="UserInfo" />
           <Property Name="UserInfoId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ActionInfo" Relationship="DataModel.ActionInfoR_UserInfo_ActionInfo" FromRole="R_UserInfo_ActionInfo" ToRole="ActionInfo" />

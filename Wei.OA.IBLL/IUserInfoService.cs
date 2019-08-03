@@ -13,5 +13,7 @@ namespace Wei.OA.IBLL
         IQueryable<UserInfo> LoadPageData(Model.Param.UserQueryParam userQueryParam);
 
         bool SetRole(int userId, List<int> roleIds);
+
+        List<string> GetRUserAction(UserInfo user);
     }
 }

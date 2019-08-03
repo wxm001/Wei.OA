@@ -14,65 +14,112 @@
     <link href="~/Content/MyCss/tableStyle.css" rel="stylesheet" />
     <script type="text/javascript">
         $(function () {
-            $(":radio").click(function() {
+            $(":radio").click(function () {
                 //发送异步请求
                 //拿到用户id 和权限id
                 var uId = $(this).attr("uId");
                 var actionId = $(this).attr("actionId");
                 var value = $(this).val(); //拿到是点的拒绝还是允许
-                $.post("/UserInfo/SetUserAction", { uId: uId, actionId: actionId, value: value }, function(data) {
-
+                $.post("/UserInfo/SetUserAction", { uId: uId, actionId: actionId, value: value }, function (data) {
+                    if (data == "ok") {
+                        alert("设置成功");
+                    }
                 });
             });
 
             $('.btnDel').click(function () {
                 if ($(this).siblings(":checked").length > 0) {
                     //后台删除数据
-                    $.post("/UserInfo/DeleteUserAction", { uId: $(this).attr("uId"), actionId: $(this).attr("actionId") }, function(data) {
-
+                    $.post("/UserInfo/DeleteUserAction", { uId: $(this).attr("uId"), actionId: $(this).attr("actionId") }, function (data) {
+                        alert("删除成功");
                     });
                 }
                 //前端删除显示状态
-                $(this).siblings(":radio").attr("checked", false);                
+                $(this).siblings(":radio").attr("checked", false);
             });
         })
     </script>
 </head>
 <body>
-<div>
-    @{
-        UserInfo user=ViewBag.User;
-    }
-    <h3>给用户 ：@user.UName 设置特殊权限</h3>
-    @{
-        <table>
-            <tr>
-                <th>权限Id</th>
-                <th>权限名</th>
-                <th>权限地址</th>
-                <th>请求方法</th>
-                <th>操作</th>
-            </tr>
-        
-        @foreach (var actionInfo in Model)
-        {
-            string strId = "rd_" + actionInfo.Id;
-            <tr>
-                <td>@actionInfo.Id</td>
-                <td>@actionInfo.ActionName</td>
-                <td>@actionInfo.Url</td>
-                <td>@actionInfo.HttpMethod</td>
-                <td>
-                    允许<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="1" />
-                    &nbsp;
-                    拒绝<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="0" />
-                    <input type="button" uId="@user.Id" actionId="@actionInfo.Id" class="btnDel" value="删除" id="btnDelete"/>
-                </td>
-            </tr>
+    <div>
+        @{
+            UserInfo user = ViewBag.User;
+            List<string> ExitR_UserInfo_ActionInfos = ViewBag.ExitR_UserInfo_ActionInfos;
         }
-        </table>
-    }
-   
-</div>
+        <h3>给用户 ：@user.UName 设置特殊权限</h3>
+        @{
+            <table>
+                <tr>
+                    <th>权限Id</th>
+                    <th>权限名</th>
+                    <th>权限地址</th>
+                    <th>请求方法</th>
+                    <th>操作</th>
+                </tr>
+
+                @foreach (var actionInfo in Model)
+                {
+                    string strId = "rd_" + actionInfo.Id;
+                    bool flag = false;
+                    <tr>
+                        <td>@actionInfo.Id</td>
+                        <td>@actionInfo.ActionName</td>
+                        <td>@actionInfo.Url</td>
+                        <td>@actionInfo.HttpMethod</td>
+                            
+                        @if (ExitR_UserInfo_ActionInfos != null)
+                        {
+                            foreach (var exitRUserInfoActionInfo in ExitR_UserInfo_ActionInfos)
+                            {
+                                string[] str = exitRUserInfoActionInfo.Split(',');
+
+                                if (actionInfo.Id==int.Parse(str[1])&&str[0]=="1")
+                                {
+                                    flag = true;
+                                    <td>
+                                        允许<input type="radio" checked="checked" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="1" />
+                                        &nbsp;
+                                        拒绝<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="0" />
+                                        <input type="button" uId="@user.Id" actionId="@actionInfo.Id" class="btnDel" value="删除" id="btnDelete" />
+                                    </td> 
+                                }else if (actionInfo.Id == int.Parse(str[1]) && str[0] == "0")
+                                {
+                                    flag = true;
+                                    <td>
+                                        允许<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="1" />
+                                        &nbsp;
+                                        拒绝<input type="radio" checked="checked" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="0" />
+                                        <input type="button" uId="@user.Id" actionId="@actionInfo.Id" class="btnDel" value="删除" id="btnDelete" />
+                                    </td> 
+                                }
+                                
+                            }
+                            if (!flag)
+                            {                                
+                                <td>
+                                    允许<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="1" />
+                                    &nbsp;
+                                    拒绝<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="0" />
+                                    <input type="button" uId="@user.Id" actionId="@actionInfo.Id" class="btnDel" value="删除" id="btnDelete" />
+                                </td> 
+                            }
+                        }
+                        else
+                        {
+                            <td>
+                                允许<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="1" />
+                                &nbsp;
+                                拒绝<input type="radio" uId="@user.Id" actionId="@actionInfo.Id" name="@strId" value="0" />
+                                <input type="button" uId="@user.Id" actionId="@actionInfo.Id" class="btnDel" value="删除" id="btnDelete" />
+                            </td> 
+                        }
+
+                       
+                    </tr>
+                }
+            </table>
+        }
+
+    </div>
 </body>
 </html>

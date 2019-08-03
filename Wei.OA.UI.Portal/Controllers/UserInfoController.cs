@@ -157,7 +157,7 @@ namespace Wei.OA.UI.Portal.Controllers
         public ActionResult SetRole(int id)
         {
             int userId = id; //当前设置角色的用户
-            UserInfo userInfo = UserInfoService.GetEntities(u => u.Id == id).FirstOrDefault();
+            UserInfo userInfo = UserInfoService.GetEntities(u => u.Id == userId).FirstOrDefault();
             //和viewdata.model差不多，把所有角色发到前台
             ViewBag.AllRoles = RoleInfoService.GetEntities(u => u.DelFlag == this.delFlagNormal).ToList();
             //用户已经关联的角色发到前台
@@ -192,14 +192,27 @@ namespace Wei.OA.UI.Portal.Controllers
 
         public ActionResult SetAction(int id)
         {
-            ViewBag.User = UserInfoService.GetEntities(u => u.Id == id).FirstOrDefault();
+            //当前设置特殊权限的用户
+            UserInfo user= UserInfoService.GetEntities(u => u.Id == id).FirstOrDefault();
+            ViewBag.User = user;
+            //所有权限
             ViewData.Model = ActionInfoService.GetEntities(a => a.DelFlag == this.delFlagNormal).ToList();
+
+            #region 用户已经有的权限向前台显示
+
+            //思路：在这里就找到当前用户的所有的特殊权限对应的actionid，并且还有拿到他的HasPermission值
+            //值在bll层拿到，然后在前端加入判断条件控制显示。
+            //-------------
+            List<string> ExitR_UserInfo_ActionInfos = UserInfoService.GetRUserAction(user);
+            ViewBag.ExitR_UserInfo_ActionInfos = ExitR_UserInfo_ActionInfos;
+            #endregion 
+
             return this.View();
         }
         //删除特殊权限
         public ActionResult DeleteUserAction(int uId,int actionId)
         {
-            var rUserAction = R_UserInfo_ActionInfoService.GetEntities(r => r.ActionInfoId == actionId && r.UserInfoId == uId).FirstOrDefault();
+            var rUserAction = R_UserInfo_ActionInfoService.GetEntities(r => r.ActionInfoId == actionId && r.UserInfoId == uId&&r.DelFlag==this.delFlagNormal).FirstOrDefault();
             if (rUserAction!=null)
             {
                 //rUserAction.DelFlag = (short)Wei.OA.Model.Enum.DelFlagEnum.Deleted;
@@ -208,14 +221,26 @@ namespace Wei.OA.UI.Portal.Controllers
             return Content("ok");
         }
 
-        //设置当前用户的特殊权限
+        //允许或拒绝当前用户的特殊权限
         public ActionResult SetUserAction(int uId,int actionId,int value)
         {
-            var rUserAction = R_UserInfo_ActionInfoService.GetEntities(r => r.ActionInfoId == actionId && r.UserInfoId == uId).FirstOrDefault();
+            var rUserAction = R_UserInfo_ActionInfoService.GetEntities(r => r.ActionInfoId == actionId && r.UserInfoId == uId&&r.DelFlag==this.delFlagNormal).FirstOrDefault();
             if (rUserAction != null)
             {
-               
+                rUserAction.HasPermission = value == 1 ? true : false;
+                R_UserInfo_ActionInfoService.Update(rUserAction);
             }
+            else
+            {
+                R_UserInfo_ActionInfo rUserInfoActionInfo=new R_UserInfo_ActionInfo();
+                rUserInfoActionInfo.ActionInfoId = actionId;
+                rUserInfoActionInfo.UserInfoId = uId;
+                rUserInfoActionInfo.HasPermission = value == 1 ? true : false;
+                rUserInfoActionInfo.DelFlag = this.delFlagNormal;
+                R_UserInfo_ActionInfoService.Add(rUserInfoActionInfo);
+            }
+
+            return Content("ok");
         }
 
         #endregion
