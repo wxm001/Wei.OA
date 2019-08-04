@@ -9,7 +9,7 @@ namespace Wei.OA.UI.Portal.Controllers
     using Wei.OA.IBLL;
     using Wei.OA.Model;
 
-    public class RoleInfoController : Controller
+    public class RoleInfoController : BaseController
     {
         // GET: RoleInfo
         public IRoleInfoService RoleInfoService { get; set; }

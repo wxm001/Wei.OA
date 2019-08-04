@@ -1434,6 +1434,7 @@
     <Content Include="Content\lib\ligerUI\skins\Silvery\images\layout\tabs-tools.gif" />
     <Content Include="Content\MyCss\BetterTableCss.css" />
     <Content Include="Content\MyCss\tableStyle.css" />
+    <Content Include="Error.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

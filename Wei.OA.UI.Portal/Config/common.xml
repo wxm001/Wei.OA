@@ -2,12 +2,12 @@
 <objects xmlns="http://www.springframework.net">
 
   <!--启用了mm分布式缓存配置-->
-  <!--<object name="CacheWriter" type="Wei.OA.Common.Cache.MemcacheWriter,Wei.OA.Common" singleton="false" >
-  </object>-->
+  <object name="CacheWriter" type="Wei.OA.Common.Cache.MemcacheWriter,Wei.OA.Common" singleton="false" >
+  </object>
 
   <!--若使用单机缓存，请去掉注释-->
-  <object name="CacheWriter" type="Wei.OA.Common.Cache.HttpRuntimeCacheWriter,Wei.OA.Common" singleton="false" >
-  </object>
+  <!--<object name="CacheWriter" type="Wei.OA.Common.Cache.HttpRuntimeCacheWriter,Wei.OA.Common" singleton="false" >
+  </object>-->
 
   <!--属性注入-->
   <object name="CacheHelper" type="Wei.OA.Common.Cache.CacheHelper,Wei.OA.Common" singleton="false" >

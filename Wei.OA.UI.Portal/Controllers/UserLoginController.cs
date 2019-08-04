@@ -11,13 +11,13 @@ namespace Wei.OA.UI.Portal.Controllers
     using Wei.OA.UI.Portal.Models;
 
     [LoginCheckFilter(IsCheck = false)]
-    public class UserLoginController : BaseController
+    public class UserLoginController : Controller
     {
         // GET: UserLogin
-        public UserLoginController()
-        {
-            this.IsCheckUserLogin = false;
-        }
+        //public UserLoginController()
+        //{
+        //    this.IsCheckUserLogin = false;
+        //}
         public IUserInfoService UserInfoService { get; set; }
 
         public ActionResult Index()
