@@ -1,0 +1,247 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WFWindowsForms.StateMoneyActivity"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:local="clr-namespace:WFWindowsForms"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="InBookMarkName" Type="InArgument(x:String)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Deployment</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Net.Http</AssemblyReference>
+      <AssemblyReference>System.Windows.Forms</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>WFWindowsForms</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <StateMachine InitialState="{x:Reference __ReferenceID3}">
+    <State x:Name="__ReferenceID3" DisplayName="用户提交审批信息">
+      <State.Entry>
+        <Sequence>
+          <WriteLine Text="请审批金额" sap2010:WorkflowViewState.IdRef="WriteLine_1" />
+          <local:WaitForCodeActivity DisplayName="创建书签等待用户输入数据">
+            <local:WaitForCodeActivity.BookMarkName>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">InBookMarkName</mca:CSharpValue>
+              </InArgument>
+            </local:WaitForCodeActivity.BookMarkName>
+            <local:WaitForCodeActivity.UserInputMoney>
+              <OutArgument x:TypeArguments="x:Int32">
+                <mca:CSharpReference x:TypeArguments="x:Int32">Money</mca:CSharpReference>
+              </OutArgument>
+            </local:WaitForCodeActivity.UserInputMoney>
+            <sap2010:WorkflowViewState.IdRef>WaitForCodeActivity_1</sap2010:WorkflowViewState.IdRef>
+          </local:WaitForCodeActivity>
+          <WriteLine>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">"金额是"+Money</mca:CSharpValue>
+            </InArgument>
+            <sap2010:WorkflowViewState.IdRef>WriteLine_2</sap2010:WorkflowViewState.IdRef>
+          </WriteLine>
+          <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
+        </Sequence>
+      </State.Entry>
+      <State.Exit>
+        <WriteLine Text="状态1 离开" sap2010:WorkflowViewState.IdRef="WriteLine_3" />
+      </State.Exit>
+      <State.Transitions>
+        <Transition DisplayName="T1">
+          <Transition.To>
+            <State x:Name="__ReferenceID1" DisplayName="x项目经理审批">
+              <State.Entry>
+                <WriteLine Text="项目经理审批" sap2010:WorkflowViewState.IdRef="WriteLine_4" />
+              </State.Entry>
+              <State.Exit>
+                <WriteLine Text="项目经理审批结束" sap2010:WorkflowViewState.IdRef="WriteLine_5" />
+              </State.Exit>
+              <State.Transitions>
+                <Transition DisplayName="大于100">
+                  <Transition.Condition>
+                    <mca:CSharpValue x:TypeArguments="x:Boolean">Money&gt;100</mca:CSharpValue>
+                  </Transition.Condition>
+                  <Transition.To>
+                    <State x:Name="__ReferenceID2" DisplayName="总监审批">
+                      <State.Entry>
+                        <WriteLine Text="总监审批" sap2010:WorkflowViewState.IdRef="WriteLine_6" />
+                      </State.Entry>
+                      <State.Exit>
+                        <WriteLine Text="总监审批结束" sap2010:WorkflowViewState.IdRef="WriteLine_7" />
+                      </State.Exit>
+                      <State.Transitions>
+                        <Transition DisplayName="T4">
+                          <Transition.To>
+                            <State x:Name="__ReferenceID0" DisplayName="FinalState" IsFinal="True">
+                              <State.Entry>
+                                <WriteLine Text="审批结束" sap2010:WorkflowViewState.IdRef="WriteLine_8" />
+                              </State.Entry>
+                              <sap2010:WorkflowViewState.IdRef>State_1</sap2010:WorkflowViewState.IdRef>
+                            </State>
+                          </Transition.To>
+                          <sap2010:WorkflowViewState.IdRef>Transition_1</sap2010:WorkflowViewState.IdRef>
+                        </Transition>
+                      </State.Transitions>
+                      <sap2010:WorkflowViewState.IdRef>State_2</sap2010:WorkflowViewState.IdRef>
+                    </State>
+                  </Transition.To>
+                  <sap2010:WorkflowViewState.IdRef>Transition_2</sap2010:WorkflowViewState.IdRef>
+                </Transition>
+                <Transition DisplayName="小于100" To="{x:Reference __ReferenceID0}">
+                  <Transition.Condition>
+                    <mca:CSharpValue x:TypeArguments="x:Boolean">Money&lt;=100</mca:CSharpValue>
+                  </Transition.Condition>
+                  <sap2010:WorkflowViewState.IdRef>Transition_3</sap2010:WorkflowViewState.IdRef>
+                </Transition>
+              </State.Transitions>
+              <sap2010:WorkflowViewState.IdRef>State_3</sap2010:WorkflowViewState.IdRef>
+            </State>
+          </Transition.To>
+          <sap2010:WorkflowViewState.IdRef>Transition_4</sap2010:WorkflowViewState.IdRef>
+        </Transition>
+      </State.Transitions>
+      <sap2010:WorkflowViewState.IdRef>State_4</sap2010:WorkflowViewState.IdRef>
+    </State>
+    <x:Reference>__ReferenceID1</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <StateMachine.Variables>
+      <Variable x:TypeArguments="x:Int32" Name="Money" />
+    </StateMachine.Variables>
+    <sap2010:WorkflowViewState.IdRef>StateMachine_1</sap2010:WorkflowViewState.IdRef>
+    <sads:DebugSymbol.Symbol>d0JFOlx2c+mhueebrlxPQemhueebrlxXZWkuT0FcV0ZXaW5kb3dzRm9ybXNcU3RhdGVNb25leUFjdGl2aXR5LnhhbWwbLwONARICAQEwBYQBDQIBGlANfhUCAQ1dFXIdAgEGZx1sJQIBAjIJSBQCAR9LCUtSAgEdUhFSWgIBGFURVVwCARZaFVpgAgESeBV4YQIBD18ZX2ACAQtiGWJiAgEJaSFpaAIBBDMLM1MCASs0C0AnAgEkQQtGFwIBIEsZSyECAR5SIVIpAgEZVSFVKwIBF18pXy8CAQxiKWIxAgEKaTFpNwIBBTMbMyICASw3ETddAgEoPBE8WwIBJUMPQ1gCASE=</sads:DebugSymbol.Symbol>
+  </StateMachine>
+  <sap2010:WorkflowViewState.IdRef>WFWindowsForms.StateMoneyActivity_1</sap2010:WorkflowViewState.IdRef>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="WaitForCodeActivity_1" sap:VirtualizedContainerService.HintSize="213,22" />
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="235,352">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="WriteLine_5" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="WriteLine_6" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="WriteLine_7" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="WriteLine_8" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="State_1" sap:VirtualizedContainerService.HintSize="114,61">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">160,292.5</av:Point>
+            <av:Size x:Key="ShapeSize">114,61</av:Size>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:PointCollection x:Key="ConnectorLocation">363,309.15 333,309.15 333,326.05 274,326.05</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">49</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">40</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="State_2" sap:VirtualizedContainerService.HintSize="114,61">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">363,269.5</av:Point>
+            <av:Size x:Key="ShapeSize">114,61</av:Size>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_2" sap:VirtualizedContainerService.HintSize="430,523">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:PointCollection x:Key="ConnectorLocation">352.8,200.5 352.8,230.5 420,230.5 420,269.5</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">55</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">38</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_3" sap:VirtualizedContainerService.HintSize="430,523">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:PointCollection x:Key="ConnectorLocation">284.4,200.5 284.4,230.5 199.9,230.5 199.9,292.5</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">7</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">26</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="114,61">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">273,139.5</av:Point>
+            <av:Size x:Key="ShapeSize">114,61</av:Size>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:PointCollection x:Key="ConnectorLocation">124.1,141 124.1,166.95 273,166.95</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">51</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">33</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="114,61">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">50,80</av:Point>
+            <av:Size x:Key="ShapeSize">114,61</av:Size>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="StateMachine_1" sap:VirtualizedContainerService.HintSize="614,636">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <x:Double x:Key="StateContainerWidth">600</x:Double>
+            <x:Double x:Key="StateContainerHeight">600</x:Double>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,110.5 164,110.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WFWindowsForms.StateMoneyActivity_1" sap:VirtualizedContainerService.HintSize="654,716" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
