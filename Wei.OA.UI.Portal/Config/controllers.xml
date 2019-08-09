@@ -25,4 +25,9 @@
     <property name="UserInfoService" ref ="UserInfoService" />
     <property name="ActionInfoService" ref ="ActionInfoService" />
   </object>
+  <object type="Wei.OA.UI.Portal.Controllers.WFTempController, Wei.OA.UI.Portal" singleton="false" >
+    <property name="WF_TempService" ref ="WF_TempService" />
+  </object>
+
+  
 </objects>

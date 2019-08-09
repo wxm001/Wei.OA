@@ -16,6 +16,10 @@ namespace Wei.OA.DALFactory
         {                   
             return Assembly.Load(AssemblyName).CreateInstance(AssemblyName + ".ActionInfoDal") as IActionInfoDal;
         }
+		public static IFileInfoDal GetFileInfoDal()
+        {                   
+            return Assembly.Load(AssemblyName).CreateInstance(AssemblyName + ".FileInfoDal") as IFileInfoDal;
+        }
 		public static IOrderInfoDal GetOrderInfoDal()
         {                   
             return Assembly.Load(AssemblyName).CreateInstance(AssemblyName + ".OrderInfoDal") as IOrderInfoDal;
@@ -35,6 +39,18 @@ namespace Wei.OA.DALFactory
 		public static IUserInfoExtDal GetUserInfoExtDal()
         {                   
             return Assembly.Load(AssemblyName).CreateInstance(AssemblyName + ".UserInfoExtDal") as IUserInfoExtDal;
+        }
+		public static IWF_InstanceDal GetWF_InstanceDal()
+        {                   
+            return Assembly.Load(AssemblyName).CreateInstance(AssemblyName + ".WF_InstanceDal") as IWF_InstanceDal;
+        }
+		public static IWF_StepDal GetWF_StepDal()
+        {                   
+            return Assembly.Load(AssemblyName).CreateInstance(AssemblyName + ".WF_StepDal") as IWF_StepDal;
+        }
+		public static IWF_TempDal GetWF_TempDal()
+        {                   
+            return Assembly.Load(AssemblyName).CreateInstance(AssemblyName + ".WF_TempDal") as IWF_TempDal;
         }
 	}
 }

@@ -31,5 +31,9 @@ namespace Wei.OA.Model
         public virtual DbSet<RoleInfo> RoleInfo { get; set; }
         public virtual DbSet<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }
         public virtual DbSet<UserInfoExt> UserInfoExt { get; set; }
+        public virtual DbSet<WF_Temp> WF_Temp { get; set; }
+        public virtual DbSet<WF_Instance> WF_Instance { get; set; }
+        public virtual DbSet<FileInfo> FileInfo { get; set; }
+        public virtual DbSet<WF_Step> WF_Step { get; set; }
     }
 }

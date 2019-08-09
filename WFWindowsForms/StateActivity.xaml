@@ -1,6 +1,7 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WFWindowsForms.StateActivity" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="WFWindowsForms.StateActivity_1"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WFWindowsForms.StateActivity"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:local="clr-namespace:WFWindowsForms"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
@@ -9,6 +10,11 @@
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="MarkName" Type="InArgument(x:String)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>WFWindowsForms.StateActivity_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System</x:String>
@@ -22,7 +28,9 @@
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.DurableInstancing</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Runtime.DurableInstancing</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
       <AssemblyReference>System.Xaml</AssemblyReference>
@@ -43,7 +51,23 @@
     <StateMachine.InitialState>
       <State x:Name="__ReferenceID1" DisplayName="State1" sap2010:WorkflowViewState.IdRef="State_2">
         <State.Entry>
-          <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="进入状态1" />
+          <Sequence>
+            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="进入状态1" />
+            <local:WaitForCodeActivity>
+              <local:WaitForCodeActivity.BookMarkName>
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">MarkName</mca:CSharpValue>
+                </InArgument>
+              </local:WaitForCodeActivity.BookMarkName>
+              <local:WaitForCodeActivity.UserInputMoney>
+                <OutArgument x:TypeArguments="x:Int32">
+                  <mca:CSharpReference x:TypeArguments="x:Int32">Num</mca:CSharpReference>
+                </OutArgument>
+              </local:WaitForCodeActivity.UserInputMoney>
+              <sap2010:WorkflowViewState.IdRef>WaitForCodeActivity_1</sap2010:WorkflowViewState.IdRef>
+            </local:WaitForCodeActivity>
+            <sap2010:WorkflowViewState.IdRef>Sequence_2</sap2010:WorkflowViewState.IdRef>
+          </Sequence>
         </State.Entry>
         <State.Exit>
           <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="离开状态1" />
@@ -110,25 +134,23 @@
               <mca:CSharpValue x:TypeArguments="x:Boolean">Num&gt;80&amp;&amp;Num&lt;90</mca:CSharpValue>
             </Transition.Condition>
           </Transition>
-          <Transition DisplayName="T4">
+          <Transition DisplayName="T4" sap2010:WorkflowViewState.IdRef="Transition_5">
             <Transition.Trigger>
-              <WriteLine Text="T4 触发器" sap2010:WorkflowViewState.IdRef="WriteLine_11" />
+              <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_11" Text="T4 触发器" />
             </Transition.Trigger>
             <Transition.To>
-              <State x:Name="__ReferenceID3" DisplayName="State3">
+              <State x:Name="__ReferenceID3" DisplayName="State3" sap2010:WorkflowViewState.IdRef="State_4">
                 <State.Transitions>
-                  <Transition DisplayName="T5" To="{x:Reference __ReferenceID0}" sap2010:WorkflowViewState.IdRef="Transition_4" />
+                  <Transition DisplayName="T5" sap2010:WorkflowViewState.IdRef="Transition_4" To="{x:Reference __ReferenceID0}" />
                 </State.Transitions>
-                <sap2010:WorkflowViewState.IdRef>State_4</sap2010:WorkflowViewState.IdRef>
               </State>
             </Transition.To>
             <Transition.Action>
-              <WriteLine Text="T4 action" sap2010:WorkflowViewState.IdRef="WriteLine_12" />
+              <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_12" Text="T4 action" />
             </Transition.Action>
             <Transition.Condition>
               <mca:CSharpValue x:TypeArguments="x:Boolean">Num&gt;50&amp;&amp;Num&lt;60</mca:CSharpValue>
             </Transition.Condition>
-            <sap2010:WorkflowViewState.IdRef>Transition_5</sap2010:WorkflowViewState.IdRef>
           </Transition>
         </State.Transitions>
         <State.Variables>
@@ -140,11 +162,19 @@
     <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
-    <sads:DebugSymbol.Symbol>dz1FOlx2c+mhueebrlxPQemhueebrlxXZWkuT0FcV0ZXaW5kb3dzRm9ybXNcU3RhdGVBY3Rpdml0eS54YW1sJCoDkAESAgEBLAeJAQ8CARBMD1AXAgEMXg9oFwIBBXYPexcCAQIuCy5TAgEvMQsxUwIBLTYPSRoCASJWD1ZXAgEgUw9TWwIBHlsPW1gCARxuD25qAgEaaw9rWwIBGHMPc1kCARaBAQ+BAWoCARR+D35cAgESThNOWgIBDmATYFsCAQpjE2NbAgEILkkuUAIBMDFJMVACAS43ETdZAgErOBFDGgIBJkQRSB0CASNTTVNYAgEfW01bVQIBHWtNa1gCARlzH3MnAgEXfh9+KgIBE05RTlcCAQ9gUWBYAgELY1FjWAIBCTdPN1YCASxAF0BsAgEpOxc7XwIBJ0YVRlkCASQ=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz1FOlx2c+mhueebrlxPQemhueebrlxXZWkuT0FcV0ZXaW5kb3dzRm9ybXNcU3RhdGVBY3Rpdml0eS54YW1sKDIDpgESAgEBNAefAQ8CARBkD2gXAgEMdg+AARcCAQWOAQ+SARcCAQI2C0YWAgE1SQtJUwIBM04PYRoCASVuD25XAgEiaw9rWwIBIHMPc1gCAR6GAQ+GAWoCARuDAQ+DAVsCARmLAQ+LAVkCAReYAQ+YAWoCARSVAQ+VAVwCARJmE2ZaAgEOeBN4WwIBCnsTe1sCAQg3DTdVAgE9OA1EKQIBNklJSVACATRPEU9ZAgExUBFbGgIBKlwRYB0CASZrTWtYAgEhc01zVQIBH4MBTYMBWAIBGosBTosBVgIBGJUBTpUBWQIBE2ZRZlcCAQ94UXhYAgELe1F7WAIBCTdLN1ICAT47EztZAgE6QBNAWwIBN09PT1YCATJYF1hsAgEuUxdTXwIBK14VXlkCASc=</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="WaitForCodeActivity_1" sap:VirtualizedContainerService.HintSize="213,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="235,249">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,63" />
       <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="243,63" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="243,62" />

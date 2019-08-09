@@ -1,0 +1,116 @@
+﻿@model Wei.OA.Model.WF_Temp
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <link href="~/Content/kindeditor/themes/default/default.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/old/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Content/kindeditor/kindeditor-all.js"></script>
+    <script src="~/Content/kindeditor/lang/zh-CN.js"></script>
+    <script type="text/javascript">
+        var editor;
+        var editor1;
+        KindEditor.ready(function (K) {
+            editor = K.create('textarea[name="Description"]', {
+                resizeType: 1,
+                allowPreviewEmoticons: false,
+                allowImageUpload: false,
+                items: [
+                    'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+            });
+        });
+        KindEditor.ready(function (K) {
+            editor1 = K.create('textarea[name="TempForm"]', {
+                resizeType: 1,
+                allowPreviewEmoticons: false,
+                allowImageUpload: false,
+                items: [
+                    'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+            });
+        });
+        //添加成功之后执行
+        function afterAdd(data) {
+            if (data == "ok") {
+                //关闭对话框，刷新表
+                window.parent.window.afterAddByChild();
+            }
+        }
+    </script>
+</head>
+<body>
+    @using (Ajax.BeginForm(new AjaxOptions(){OnSuccess = "afterAdd"})) 
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>添加工作流模板</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.TempName,"流程名称", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TempName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TempName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description,"流程描述", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    
+                    <textarea name="Description" style="width: 700px; height: 80px; visibility: hidden;"></textarea>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.TempForm,"表单模板", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <textarea name="TempForm" style="width: 700px; height: 80px; visibility: hidden;"></textarea>
+                    @Html.ValidationMessageFor(model => model.TempForm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Remark,"流程备注", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            
+    
+            
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.ActivityType,"流程类型", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ActivityType, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ActivityType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="添加" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+</body>
+</html>

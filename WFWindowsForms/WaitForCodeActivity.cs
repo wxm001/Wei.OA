@@ -14,7 +14,8 @@ namespace WFWindowsForms
 
         public InArgument<string> BookMarkName { get; set; }
 
-        protected override bool CanInduceIdle {
+        protected override bool CanInduceIdle
+        {
             get
             {
                 return true;

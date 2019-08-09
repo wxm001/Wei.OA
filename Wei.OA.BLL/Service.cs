@@ -20,6 +20,13 @@ namespace Wei.OA.BLL
             CurrentDal = DbSession.ActionInfoDal;
         } 
 	}
+	public partial class FileInfoService : BaseService<FileInfo>,IFileInfoService
+    {
+	    public override void SetCurrentDal()
+        {
+            CurrentDal = DbSession.FileInfoDal;
+        } 
+	}
 	public partial class OrderInfoService : BaseService<OrderInfo>,IOrderInfoService
     {
 	    public override void SetCurrentDal()
@@ -53,6 +60,27 @@ namespace Wei.OA.BLL
 	    public override void SetCurrentDal()
         {
             CurrentDal = DbSession.UserInfoExtDal;
+        } 
+	}
+	public partial class WF_InstanceService : BaseService<WF_Instance>,IWF_InstanceService
+    {
+	    public override void SetCurrentDal()
+        {
+            CurrentDal = DbSession.WF_InstanceDal;
+        } 
+	}
+	public partial class WF_StepService : BaseService<WF_Step>,IWF_StepService
+    {
+	    public override void SetCurrentDal()
+        {
+            CurrentDal = DbSession.WF_StepDal;
+        } 
+	}
+	public partial class WF_TempService : BaseService<WF_Temp>,IWF_TempService
+    {
+	    public override void SetCurrentDal()
+        {
+            CurrentDal = DbSession.WF_TempDal;
         } 
 	}
 }

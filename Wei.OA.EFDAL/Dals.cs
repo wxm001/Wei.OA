@@ -16,6 +16,10 @@ namespace Wei.OA.EFDAL
     {
 
 	}
+	public partial class FileInfoDal:BaseDal<FileInfo>,IFileInfoDal
+    {
+
+	}
 	public partial class OrderInfoDal:BaseDal<OrderInfo>,IOrderInfoDal
     {
 
@@ -33,6 +37,18 @@ namespace Wei.OA.EFDAL
 
 	}
 	public partial class UserInfoExtDal:BaseDal<UserInfoExt>,IUserInfoExtDal
+    {
+
+	}
+	public partial class WF_InstanceDal:BaseDal<WF_Instance>,IWF_InstanceDal
+    {
+
+	}
+	public partial class WF_StepDal:BaseDal<WF_Step>,IWF_StepDal
+    {
+
+	}
+	public partial class WF_TempDal:BaseDal<WF_Temp>,IWF_TempDal
     {
 
 	}

@@ -5,10 +5,21 @@
     <property name="CurrentDal" ref="ActionInfoDal"/>
   </object>
 
+  <object name="FileInfoService" type="Wei.OA.BLL.FileInfoService, Wei.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession"/>
+    <property name="CurrentDal" ref="FileInfoDal"/>
+  </object>
+
   <object name="OrderInfoService" type="Wei.OA.BLL.OrderInfoService, Wei.OA.BLL" singleton="false" >
     <property name="DbSession" ref="DbSession"/>
     <property name="CurrentDal" ref="OrderInfoDal"/>
   </object>
+
+  <object name="R_UserInfo_ActionInfoService" type="Wei.OA.BLL.R_UserInfo_ActionInfoService, Wei.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession"/>
+    <property name="CurrentDal" ref="R_UserInfo_ActionInfoDal"/>
+  </object>
+
   <object name="RoleInfoService" type="Wei.OA.BLL.RoleInfoService, Wei.OA.BLL" singleton="false" >
     <property name="DbSession" ref="DbSession"/>
     <property name="CurrentDal" ref="RoleInfoDal"/>
@@ -16,10 +27,26 @@
 
   <object name="UserInfoService" type="Wei.OA.BLL.UserInfoService, Wei.OA.BLL" singleton="false" >
     <property name="DbSession" ref="DbSession"/>
-    <property name="CurrentDal" ref="UserInfoDal"/>   
-    </object>
-  <object name="R_UserInfo_ActionInfoService" type="Wei.OA.BLL.R_UserInfo_ActionInfoService, Wei.OA.BLL" singleton="false" >
+    <property name="CurrentDal" ref="UserInfoDal"/>
+  </object>
+
+  <object name="UserInfoExtService" type="Wei.OA.BLL.UserInfoExtService, Wei.OA.BLL" singleton="false" >
     <property name="DbSession" ref="DbSession"/>
-    <property name="CurrentDal" ref="R_UserInfo_ActionInfoDal"/>
+    <property name="CurrentDal" ref="UserInfoExtDal"/>
+  </object>
+
+  <object name="WF_InstanceService" type="Wei.OA.BLL.WF_InstanceService, Wei.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession"/>
+    <property name="CurrentDal" ref="WF_InstanceDal"/>
+  </object>
+
+  <object name="WF_StepService" type="Wei.OA.BLL.WF_StepService, Wei.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession"/>
+    <property name="CurrentDal" ref="WF_StepDal"/>
+  </object>
+
+  <object name="WF_TempService" type="Wei.OA.BLL.WF_TempService, Wei.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession"/>
+    <property name="CurrentDal" ref="WF_TempDal"/>
   </object>
 </objects>

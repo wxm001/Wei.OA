@@ -20,4 +20,13 @@
   </object>
   <object name="R_UserInfo_ActionInfoDal" type="Wei.OA.EFDAL.R_UserInfo_ActionInfoDal, Wei.OA.EFDAL" singleton="false"  >
   </object>
+
+  <object name="FileInfoDal" type="Wei.OA.EFDAL.FileInfoDal, Wei.OA.EFDAL" singleton="false"  >
+  </object>
+  <object name="WF_InstanceDal" type="Wei.OA.EFDAL.WF_InstanceDal, Wei.OA.EFDAL" singleton="false"  >
+  </object>
+  <object name="WF_StepDal" type="Wei.OA.EFDAL.WF_StepDal, Wei.OA.EFDAL" singleton="false"  >
+  </object>
+  <object name="WF_TempDal" type="Wei.OA.EFDAL.WF_TempDal, Wei.OA.EFDAL" singleton="false"  >
+  </object>
 </objects>

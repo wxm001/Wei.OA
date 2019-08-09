@@ -16,6 +16,10 @@ namespace Wei.OA.DALFactory
 		{
 			get{ return StaticDalFactory.GetActionInfoDal();}
 		}
+		public IFileInfoDal FileInfoDal
+		{
+			get{ return StaticDalFactory.GetFileInfoDal();}
+		}
 		public IOrderInfoDal OrderInfoDal
 		{
 			get{ return StaticDalFactory.GetOrderInfoDal();}
@@ -35,6 +39,18 @@ namespace Wei.OA.DALFactory
 		public IUserInfoExtDal UserInfoExtDal
 		{
 			get{ return StaticDalFactory.GetUserInfoExtDal();}
+		}
+		public IWF_InstanceDal WF_InstanceDal
+		{
+			get{ return StaticDalFactory.GetWF_InstanceDal();}
+		}
+		public IWF_StepDal WF_StepDal
+		{
+			get{ return StaticDalFactory.GetWF_StepDal();}
+		}
+		public IWF_TempDal WF_TempDal
+		{
+			get{ return StaticDalFactory.GetWF_TempDal();}
 		}
 	}
 }

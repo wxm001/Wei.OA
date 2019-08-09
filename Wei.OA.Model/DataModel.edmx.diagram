@@ -16,6 +16,13 @@
         <AssociationConnector Association="DataModel.UserInfoR_UserInfo_ActionInfo" />
         <AssociationConnector Association="DataModel.ActionInfoR_UserInfo_ActionInfo" />
         <EntityTypeShape EntityType="DataModel.UserInfoExt" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="DataModel.WF_Temp" Width="1.5" PointX="0.875" PointY="7.5" />
+        <EntityTypeShape EntityType="DataModel.WF_Instance" Width="1.5" PointX="3.75" PointY="7.375" />
+        <EntityTypeShape EntityType="DataModel.FileInfo" Width="1.5" PointX="3.375" PointY="11.5" />
+        <AssociationConnector Association="DataModel.WF_InstanceFileInfo" />
+        <AssociationConnector Association="DataModel.WF_TempWF_Instance" />
+        <EntityTypeShape EntityType="DataModel.WF_Step" Width="1.5" PointX="6.75" PointY="7.5" />
+        <AssociationConnector Association="DataModel.WF_InstanceWF_Step" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
