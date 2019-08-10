@@ -51,12 +51,24 @@ namespace Wei.OA.UI.Portal.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)] //特殊字符处理
         public ActionResult Add(WF_Temp temp)
         {
             temp.DelFlag = this.delFlagNormal;
             temp.SubTime=DateTime.Now;
+
             WF_TempService.Add(temp);
             return Content("ok");
+        }
+
+        #endregion
+
+        #region 发起流程
+
+        public ActionResult WFStart()
+        {
+            ViewData.Model = WF_TempService.GetEntities(u => true).ToList();
+            return this.View();
         }
 
         #endregion

@@ -1,0 +1,72 @@
+﻿@using Wei.OA.Model
+@model Wei.OA.Model.WF_Instance
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <link href="~/Content/kindeditor/themes/default/default.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/old/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Content/kindeditor/kindeditor-all.js"></script>
+    <script src="~/Content/kindeditor/lang/zh-CN.js"></script>
+    <script type="text/javascript">
+        var editor;
+        KindEditor.ready(function (K) {
+            editor = K.create('textarea[name="Content"]', {
+                resizeType: 1,
+                allowPreviewEmoticons: false,
+                allowImageUpload: false,
+                items: [
+                    'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+            });
+        });
+        //添加成功之后执行
+        function afterAdd(data) {
+            if (data == "ok") {
+                //关闭对话框，刷新表
+                window.parent.window.afterAddByChild();
+            }
+        }
+    </script>
+</head>
+<body>
+@{
+    WF_Temp temp = ViewBag.Temp;
+}
+    <table>
+        <tr>
+            <td>流程类型：</td>
+            <td>@temp.TempName</td>
+        </tr>
+        <tr>
+            <td>流程描述：</td>
+            <td>@Html.Raw(temp.Description)</td>
+        </tr>
+        <tr>
+            <td>流程名：</td>
+            <td>@Html.EditorFor(m => m.InstanceName)</td>
+        </tr>
+        <tr>
+            <td>流转到：</td>
+            <td>@Html.DropDownList("UserList")</td>
+        </tr>
+        <tr>
+            <td>申请内容：</td>
+            <td><textarea name="Content" style="width: 700px; height: 80px; visibility: hidden;">
+                    @temp.TempForm
+                </textarea>
+                </td>
+        </tr>
+    </table>
+</body>
+</html>

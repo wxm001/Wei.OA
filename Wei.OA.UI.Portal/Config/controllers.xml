@@ -28,6 +28,10 @@
   <object type="Wei.OA.UI.Portal.Controllers.WFTempController, Wei.OA.UI.Portal" singleton="false" >
     <property name="WF_TempService" ref ="WF_TempService" />
   </object>
-
+  <object type="Wei.OA.UI.Portal.Controllers.WFInstanceController, Wei.OA.UI.Portal" singleton="false" >
+    <property name="WF_TempService" ref ="WF_TempService" />
+    <property name="UserInfoService" ref ="UserInfoService" />
+  </object>
+  
   
 </objects>

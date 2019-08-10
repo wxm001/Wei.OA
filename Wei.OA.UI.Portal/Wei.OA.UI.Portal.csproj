@@ -170,6 +170,7 @@
     <Compile Include="Controllers\RoleInfoController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\UserLoginController.cs" />
+    <Compile Include="Controllers\WFInstanceController.cs" />
     <Compile Include="Controllers\WFTempController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1719,6 +1720,8 @@
     <Content Include="Views\UserInfo\SetAction.cshtml" />
     <Content Include="Views\WFTemp\Index.cshtml" />
     <Content Include="Views\WFTemp\Add.cshtml" />
+    <Content Include="Views\WFTemp\WFStart.cshtml" />
+    <Content Include="Views\WFInstance\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
