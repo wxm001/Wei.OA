@@ -75,6 +75,7 @@
       <HintPath>..\packages\Spring.Web.Mvc5.2.0.1\lib\net45\Spring.Web.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -1722,6 +1723,11 @@
     <Content Include="Views\WFTemp\Add.cshtml" />
     <Content Include="Views\WFTemp\WFStart.cshtml" />
     <Content Include="Views\WFInstance\Add.cshtml" />
+    <Content Include="Views\WFInstance\ShowMyCheck.cshtml" />
+    <Content Include="Views\WFInstance\ShowMyUnCheck.cshtml" />
+    <Content Include="Views\WFInstance\ShowMyChecked.cshtml" />
+    <Content Include="Views\WFInstance\ShowInstance.cshtml" />
+    <Content Include="Views\WFInstance\ShowCheck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1769,6 +1775,10 @@
     <ProjectReference Include="..\Wei.OA.Model\Wei.OA.Model.csproj">
       <Project>{f0761532-317d-4003-8cd5-8e0fa4b998af}</Project>
       <Name>Wei.OA.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wei.OA.Workflow\Wei.OA.Workflow.csproj">
+      <Project>{A4976106-1968-4F4B-98FD-5CB1E6DCF2DE}</Project>
+      <Name>Wei.OA.Workflow</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

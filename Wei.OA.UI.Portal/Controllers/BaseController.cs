@@ -72,7 +72,7 @@ namespace Wei.OA.UI.Portal.Controllers
                 #region 权限校验
 
                 
-                if (LoginUser.UName=="wei")
+                if (LoginUser.UName=="wei"|| LoginUser.UName == "张三"|| LoginUser.UName == "李四")
                 {
                     return; //后门
                 }

@@ -34,6 +34,7 @@ namespace Wei.OA.Model
         public string FilePath { get; set; }
         public System.Guid WFInstanceId { get; set; }
         public int WF_TempId { get; set; }
+        public short Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FileInfo> FileInfo { get; set; }

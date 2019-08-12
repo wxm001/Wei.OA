@@ -1,0 +1,95 @@
+﻿@model Wei.OA.Model.WF_Instance
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowCheck</title>
+    <link href="~/Content/MyCss/tableStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+            $("#pass").click(function () {
+                postCheck(true);
+            });
+
+            $("#nopass").click(function () {
+                postCheck(false);
+            });
+        });
+
+        @{
+            var stempStatus = (short) Wei.OA.Model.Enum.WFStepEnum.UnProcess;
+            var currentStep = Model.WF_Step.Where(s => s.StepStatus == 0).FirstOrDefault();
+        }
+        function postCheck(pass) {
+            var id = @Html.Raw(currentStep.Id.ToString()+";")
+            $.post("/WFInstance/DoCheck", { stepId: id, isPass: pass, Comment: $("#Comment").val(), flowTo: $("#flowTo").val() }, function (data) {
+                if (data == "ok") {
+                    window.location.href = '/WFInstance/ShowMyChecked';
+                } else {
+                    alert("审批败了！");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <td>流程名：</td>
+            <td>@Model.InstanceName</td>
+        </tr>
+        <tr>
+            <td>模板类型：</td>
+            <td>@Model.WF_Temp.TempName</td>
+        </tr>
+        <tr>
+            <td>申请人：</td>
+            <td>@Model.StartBy</td>
+        </tr>
+        <tr>
+            <td>申请时间：</td>
+            <td>@Model.StartTime</td>
+        </tr>
+        <tr>
+            <td>申请内容：</td>
+            <td>@Html.Raw(Model.Content)</td>
+        </tr>
+        <tr>
+            <td>审批步骤：</td>
+            <td>
+                @foreach (var item in Model.WF_Step)
+                {
+                    <p>
+                        审批节点：@item.StepName<br />
+                        审批人：@item.ProcessBy<br />
+                        审批时间：@item.SubTime<br />
+                        审批结果：@Html.Raw(string.IsNullOrEmpty(item.ProcessResult) ? "正在审批中..." : item.ProcessResult)<br />
+                        审批意见：@(item.ProcessComment??"审批中...")
+                    </p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>审批：</td>
+            <td>
+                <p>
+                    审批意见：<input type="text" id="Comment" name="Comment" /><br />
+                    流转到：@Html.DropDownList("flowTo")<br />
+                    <input type="button" id="pass" value="通过" />
+                    <input type="button" id="nopass" value="驳回" />
+                </p>
+            </td>
+        </tr>
+    </table>
+    <a href="/WFInstance/ShowMyCheck">返回我的审批流程</a>
+</div>
+</body>
+</html>

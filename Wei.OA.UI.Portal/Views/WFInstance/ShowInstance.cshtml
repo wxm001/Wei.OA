@@ -1,0 +1,51 @@
+﻿@model Wei.OA.Model.WF_Instance
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowInstance</title>
+    <link href="~/Content/MyCss/tableStyle.css" rel="stylesheet" />
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <td>流程名：</td><td>@Model.InstanceName</td>
+        </tr>
+        <tr>
+            <td>模板类型：</td><td>@Model.WF_Temp.TempName</td>
+        </tr>
+        <tr>
+            <td>申请人：</td><td>@Model.StartBy</td>
+        </tr>
+        <tr>
+            <td>申请时间：</td><td>@Model.StartTime</td>
+        </tr>
+        <tr>
+            <td>申请内容：</td><td>@Html.Raw(Model.Content)</td>
+        </tr>
+        <tr>
+            <td>审批步骤：</td><td>
+                @foreach (var item in Model.WF_Step)
+                {
+                    <p>
+                        审批节点：@item.StepName<br />
+                        审批人：@item.ProcessBy<br/>
+                        审批时间：@item.SubTime<br/>
+                        审批结果：@Html.Raw(string.IsNullOrEmpty(item.ProcessResult)?"正在审批中...":item.ProcessResult)<br />
+                        审批意见：@item.ProcessComment
+                    </p>
+                }
+            </td>
+        </tr>
+             
+    </table>
+    <a href="/WFInstance/ShowMyCheck">返回我的审批流程</a>
+</div>
+</body>
+</html>

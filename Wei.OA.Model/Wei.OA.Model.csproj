@@ -90,6 +90,8 @@
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Enum\DelFlagEnum.cs" />
+    <Compile Include="Enum\WFStepEnum.cs" />
+    <Compile Include="Enum\WF_InstanceEnum.cs" />
     <Compile Include="FileInfo.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

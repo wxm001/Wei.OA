@@ -31,6 +31,9 @@
   <object type="Wei.OA.UI.Portal.Controllers.WFInstanceController, Wei.OA.UI.Portal" singleton="false" >
     <property name="WF_TempService" ref ="WF_TempService" />
     <property name="UserInfoService" ref ="UserInfoService" />
+    <property name="WF_InstanceService" ref ="WF_InstanceService" />
+    <property name="WF_StepService" ref ="WF_StepService" />
+    
   </object>
   
   
